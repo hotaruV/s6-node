@@ -1,33 +1,28 @@
 {
-  "name": "api",
+  "name": "apiserver",
   "version": "1.0.0",
-  "description": "Primer Api Rest Con NODE",
-  "main": "app.js",
+  "description": "",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src",
-    "start": "node src"
+    "dev": "nodemon src/index.ja"
   },
   "keywords": [],
-  "author": "Carlos Valladares",
+  "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.2"
-  },
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.19.0",
-    "connect-multiparty": "^2.2.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "jwt-simple": "^0.5.6",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.28",
-    "mongoose": "^5.8.9",
-    "mongoose-paginate-v2": "^1.3.6",
-    "mongoose-unique-validator": "^2.0.3",
-    "morgan": "^1.9.1",
-    "nodemailer": "^6.6.0",
-    "slug": "^5.0.1",
-    "validator": "^12.1.0"
+    "express-fileupload": "^1.2.0",
+    "express-validator": "^6.6.1",
+    "google-auth-library": "^6.1.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.8",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
