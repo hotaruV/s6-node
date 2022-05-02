@@ -1,1 +1,1 @@
-# s6-node
+# hospital_api_node
