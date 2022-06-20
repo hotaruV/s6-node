@@ -18,7 +18,6 @@ const UsuarioSchema = Schema({
     password: { type: String, required: true },
     img: { type: String },
     rol: { type: String, require: true, default: 'MEDICO_ROL', enum: RolesValidos },
-    google: { type: Boolean, default: false },
     genero: { type: String, require: false, enum: GeneroValido },
     activo: { type: Number, require: true, default: 1 },
     _created_at: { type: String, require: true, default: fecha },
