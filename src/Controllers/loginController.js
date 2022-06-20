@@ -39,42 +39,7 @@ const loginController = {
 
     },
 
-    loginGoogle: async(req, res = response) => {
-        const googleToken = req.body.token;
-        //console.log(googleToken);
-        try {
-            const { name, email, picture } = await verify(googleToken);
-            const usuarioDB = await Usuario.findOne({ email });
-            if (!usuarioDB) {
-                usuario = new Usuario({
-                    nombre: name,
-                    email,
-                    password: '@@@',
-                    img: picture,
-                    google: true
-                })
-            } else {
-                // exite
-                usuario = usuarioDB;
-                usuario.google = true;
-                usuario.password = '@@@'
-            }
-            await usuario.save();
-            const jwt = await JWTgenerate(usuario.id)
-
-            res.status(200).json({
-                ok: true,
-                msg: "Login Google",
-                jwt
-            })
-        } catch (error) {
-            res.status(401).json({
-                ok: false,
-                msg: "Token Invalido"
-            })
-        }
-
-    },
+  
     renewToken: async(req, res = response) => {
 
         const uid = req.uid
