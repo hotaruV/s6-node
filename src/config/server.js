@@ -20,6 +20,7 @@ app.use(express.static("./src/public"));
 app.use("/api/index", require("../routes/index.routes"));
 app.use("/api/seaslp/users", require("../routes/usuarios.routes"));
 app.use("/api/seaslp/login", require("../routes/login.routes"));
+app.use("/api/seaslp/tenders", require("../routes/tenders.routes"));
 
 // app.use('/api/upload', require('../routes/uploadsFiles.routes'));
 module.exports = app;

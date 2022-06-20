@@ -5,35 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id" content="128905102745-sg1o74sf0veu04ganlessh92ggli3b3m.apps.googleusercontent.com">
-    <title>Demo</title>
+    <title>Plataforma Digital Nacional SAN LUIS POTOSI api-s6</title>
 </head>
 
 <body>
-    <h1>Google Sign In</h1>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
-
-
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-            const id_token = googleUser.getAuthResponse().id_token;
-            console.log(id_token);
-        }
-
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function() {
-                console.log('User signed out.');
-            });
-        }
-    </script>
+    <h1>Plataforma Digital Nacional SLP S6-API</h1>
+    v1
 </body>
-
 </html>
