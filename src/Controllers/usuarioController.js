@@ -28,7 +28,7 @@ const usrController = {
       if (ExisteEmail) {
         return res.status(400).json({
           ok: false,
-          msg:  `El ${email} ya existe en nuestros registros, contacte adminstrador`,
+          msg:  `El ${email} ya existe en nuestros registros, contacte adminstrador`
         });
       }
       const usuario = new Usuario(req.body);
@@ -58,12 +58,12 @@ const usrController = {
         if (!usuarioDB) {
           return res.status(404).json({
             ok: false,
-            msg: "No existe usuario",
+            msg: "No existe usuario"
           });
         }else{
             return res.status(404).json({
                 ok: true,
-                user: usuarioDB,
+                user: usuarioDB
             })
         }
         
@@ -71,7 +71,7 @@ const usrController = {
       } catch (error) {
         res.status(500).json({
           ok: false,
-          msg: "Error Inesperado-... usuario no existe",
+          msg: "Error Inesperado-... usuario no existe"
         });
       }
   },
@@ -83,7 +83,7 @@ const usrController = {
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
-          msg: "No existe usuario",
+          msg: "No existe usuario"
         });
       }
 
@@ -95,7 +95,7 @@ const usrController = {
         if (existeEmail) {
           return res.status(400).json({
             ok: false,
-            msg: "Email no valido",
+            msg: "Email no valido"
           });
         }
       }
@@ -105,12 +105,12 @@ const usrController = {
       });
       res.status(200).json({
         ok: true,
-        usuario: userUpdated,
+        usuario: userUpdated
       });
     } catch (error) {
       res.status(500).json({
         ok: false,
-        msg: "Error Inesperado-... usuario no existe",
+        msg: "Error Inesperado-... usuario no existe"
       });
     }
   },
@@ -122,18 +122,18 @@ const usrController = {
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
-          msg: "No existe usuario",
+          msg: "No existe usuario"
         });
       }
       await Usuario.findByIdAndDelete(uid);
       res.status(200).json({
         ok: true,
-        msg: "Usuario Eliminado",
+        msg: "Usuario Eliminado"
       });
     } catch (error) {
       res.status(500).json({
         ok: false,
-        msg: "Error Inesperado-... usuario no existe",
+        msg: "Error Inesperado-... usuario no existe"
       });
     }
   },

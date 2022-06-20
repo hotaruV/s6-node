@@ -3,23 +3,23 @@ const loginController = require('../controllers/loginController');
 const { validarcampos } = require('../middlewares/validar-campos');
 const { check } = require('express-validator');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const rout = Router();
+const route = Router();
 
 
 //ruta de login
-rout.post('/', [
+route.post('/', [
     check('email', 'El email es Obligatorio').isEmail(),
     check('password', 'El password es Obligatorio').not().isEmpty(),
     validarcampos
 ], loginController.login)
 
-rout.post('/google', [
-    check('token', 'El token de google es Obligatorio').not().isEmpty(),
-    validarcampos
-], loginController.loginGoogle)
+route.get('/renew', validarJWT, loginController.renewToken);
 
-rout.get('/renew', validarJWT, loginController.renewToken)
+route.post('/change-password', [
+    validarJWT, 
+    check('lastpassword', 'El password es Obligatorio').not().isEmpty(), validarcampos]
+    , loginController.resetPass)
 
 
 
-module.exports = rout;
+module.exports = route;

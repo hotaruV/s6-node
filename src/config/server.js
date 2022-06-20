@@ -17,8 +17,9 @@ app.use(cors());
 app.use(express.static("./src/public"));
 
 //archivos de rutas
-app.use("/index", require("../routes/index.routes"));
-app.use("/api/users", require("../routes/usuarios.routes"));
+app.use("/api/index", require("../routes/index.routes"));
+app.use("/api/seaslp/users", require("../routes/usuarios.routes"));
+app.use("/api/seaslp/login", require("../routes/login.routes"));
 
 // app.use('/api/upload', require('../routes/uploadsFiles.routes'));
 module.exports = app;
