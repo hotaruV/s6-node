@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 const path = require("path");
 const fs = require("fs");
 const procuringEntity = require("../models/tenders/procuringEntity");
+const awardPeriod = require("../models/tenders/awardPeriod");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -57,7 +58,32 @@ const TendersController = {
     await Procuring.save();
 
     res.status(400).json({
-      "msg": "hola"
+      ok: true,
+      msg: "Actualizado correctamente",
+    })
+  },
+  awardPeriod: async (req, res = response) => {
+    let fecha_fin = new Date(req.body.endDate).getTime();
+    let fecha_inicio = new Date(req.body.startDate).getTime();
+
+    if(fecha_inicio > fecha_fin){
+      return res.status(400).json({
+        ok: true,
+        msg : "Fecha de inicio no debe ser menor a la fecha final",
+      })
+    }
+
+    let maxExtend2 = req.body.maxExtendDate;
+    let diff = fecha_fin - fecha_inicio;
+    let periodo = (diff/86400000)+parseInt(maxExtend2);
+    
+    const Period = new awardPeriod(req.body);
+    Period.durationInDays = periodo;
+    await Period.save();
+
+    return res.status(400).json({
+        ok: true,
+        awardPeriod: Period,
     })
   }
 };
