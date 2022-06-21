@@ -2,10 +2,12 @@ const { response } = require("express");
 const { JWTgenerate } = require("../helpers/jwt");
 const { v4: uuidv4 } = require("uuid");
 const TendersDocuments = require("../models/tenders/documents");
+const Procuring = require("../models/tenders/procuringEntity");
 // const { actualizarImagen } = require('../helpers/actualizarImagen');
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const fs = require("fs");
+const procuringEntity = require("../models/tenders/procuringEntity");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -50,6 +52,10 @@ const TendersController = {
     });
   },
   procuringEntity: async(req, res = response) => {
+    const uid = req.params.id;
+    const Procuring = new procuringEntity(req.body);
+    await Procuring.save();
+
     res.status(400).json({
       "msg": "hola"
     })

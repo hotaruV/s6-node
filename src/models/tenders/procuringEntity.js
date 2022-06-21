@@ -14,4 +14,4 @@ const procuringEntitySchema = Schema({
     return object;
   });
   
-  module.exports = route;
+  module.exports = model("edca_tender.procuringentity", procuringEntitySchema);
