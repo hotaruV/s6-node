@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 const path = require("path");
 const fs = require("fs");
 const procuringEntity = require("../models/tenders/procuringEntity");
+const tenderPeriod = require("../models/tenders/tenderPeriod");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -43,7 +44,6 @@ const TendersController = {
       //actualizar Imaagen
       //actualizarImagen(tipo, id, nameFile)
 
-      
       res.status(200).json({
         ok: true,
         msg: "Archivo subido exitosamente",
@@ -51,15 +51,38 @@ const TendersController = {
       });
     });
   },
-  procuringEntity: async(req, res = response) => {
+  procuringEntity: async (req, res = response) => {
     const uid = req.params.id;
     const Procuring = new procuringEntity(req.body);
     await Procuring.save();
+    return res.status(400).json({
+      ok: true,
+      Procuring,
+    });
+  },
+  tenderPeriod: async (req, res = response) => {
+    let fecha_fin = new Date(req.body.endDate).getTime();
+    let fecha_inicio = new Date(req.body.startDate).getTime();
 
-    res.status(400).json({
-      "msg": "hola"
-    })
-  }
+    if (fecha_inicio > fecha_fin) {
+      return res.status(400).json({
+        ok: true,
+        msg: "Fecha final no debe se menor a la fecha de inicio",
+      });
+    }
+
+    let maxExtend2 = req.body.maxExtentDate;
+    let diff = fecha_fin - fecha_inicio;
+    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
+    const Period = new tenderPeriod(req.body);
+    Period.durationInDays = period;
+    await Period.save();
+
+    return res.status(400).json({
+      ok: true,
+      tenderPeriod: Period,
+    });
+  },
 };
 
 module.exports = TendersController;
