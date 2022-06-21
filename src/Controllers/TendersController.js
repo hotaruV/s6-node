@@ -91,21 +91,20 @@ const TendersController = {
     if (fecha_inicio > fecha_fin) {
       return res.status(400).json({
         ok: true,
-        msg: "Fecha de inicio no debe ser menor a la fecha final",
+        msg: "Fecha final no debe se menor a la fecha de inicio",
       });
     }
 
-    let maxExtend2 = req.body.maxExtendDate;
+    let maxExtend2 = req.body.maxExtentDate;
     let diff = fecha_fin - fecha_inicio;
-    let periodo = diff / 86400000 + parseInt(maxExtend2);
-
+    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
     const Period = new awardPeriod(req.body);
-    Period.durationInDays = periodo;
+    Period.durationInDays = period;
     await Period.save();
 
     return res.status(400).json({
       ok: true,
-      awardPeriod: Period,
+      tenderPeriod: Period,
     });
   },
 };
