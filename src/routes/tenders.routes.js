@@ -9,5 +9,6 @@ route.post("/documents", [validarJWT], TendersController.documents);
 route.post("/procuringEntity", [validarJWT], TendersController.procuringEntity);
 route.post("/tenderPeriod", [validarJWT], TendersController.tenderPeriod);
 route.post("/awardPeriod", [validarJWT], TendersController.awardPeriod);
+route.post("/enquiryPeriod", [validarJWT], TendersController.enquiryPeriod);
 
 module.exports = route;

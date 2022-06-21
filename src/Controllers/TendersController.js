@@ -10,6 +10,7 @@ const fs = require("fs");
 const procuringEntity = require("../models/tenders/procuringEntity");
 const tenderPeriod = require("../models/tenders/tenderPeriod");
 const awardPeriod = require("../models/tenders/awardPeriod");
+const enquiryPeriod = require("../models/tenders/enquiryPeriod");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -104,7 +105,30 @@ const TendersController = {
 
     return res.status(400).json({
       ok: true,
-      tenderPeriod: Period,
+      awardPeriod: Period,
+    });
+  },
+  enquiryPeriod: async(req, res = response) => {
+    let fecha_fin = new Date(req.body.endDate).getTime();
+    let fecha_inicio = new Date(req.body.startDate).getTime();
+
+    if (fecha_inicio > fecha_fin) {
+      return res.status(400).json({
+        ok: true,
+        msg: "Fecha final no debe se menor a la fecha de inicio",
+      });
+    }
+
+    let maxExtend2 = req.body.maxExtentDate;
+    let diff = fecha_fin - fecha_inicio;
+    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
+    const Period = new enquiryPeriod(req.body);
+    Period.durationInDays = period;
+    await Period.save();
+
+    return res.status(400).json({
+      ok: true,
+      enquiryPeriod: Period,
     });
   },
 };
