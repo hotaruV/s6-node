@@ -11,6 +11,8 @@ const procuringEntity = require("../models/tenders/procuringEntity");
 const tenderPeriod = require("../models/tenders/tenderPeriod");
 const awardPeriod = require("../models/tenders/awardPeriod");
 const enquiryPeriod = require("../models/tenders/enquiryPeriod");
+const value = require("../models/tenders/value");
+const minValue = require("../models/tenders/minValue");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -129,6 +131,24 @@ const TendersController = {
     return res.status(400).json({
       ok: true,
       enquiryPeriod: Period,
+    });
+  },
+  minValue: async(req, res = response) => {
+    const val = new minValue(req.body);
+    await val.save();
+
+    return res.status(400).json({
+      ok: true,
+      minValue: val,
+    });
+  },
+  value: async(req, res = response) => {
+    const val = new value(req.body);
+    await val.save();
+
+    return res.status(400).json({
+      ok: true,
+      value: val,
     });
   },
 };
