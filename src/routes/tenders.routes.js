@@ -6,6 +6,7 @@ const route = Router();
 route.use(E_fileUpload())
 
 route.post("/documents", [validarJWT], TendersController.documents);
+route.post("/procuringEntity", [validarJWT], TendersController.procuringEntity);
 
 
 module.exports = route;

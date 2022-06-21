@@ -49,6 +49,11 @@ const TendersController = {
       });
     });
   },
+  procuringEntity: async(req, res = response) => {
+    res.status(400).json({
+      "msg": "hola"
+    })
+  }
 };
 
 module.exports = TendersController;
