@@ -90,6 +90,9 @@ const usrController = {
       //validar token
       //
       const { password, email, ...campos } = req.body;
+
+      
+      
       if (usuarioDB.email !== email) {
         const existeEmail = await Usuario.findOne({ email });
         if (existeEmail) {

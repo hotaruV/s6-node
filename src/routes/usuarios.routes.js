@@ -31,6 +31,7 @@ route.put(
 );
 
 route.get("/buscar-uno/:id", [validarJWT],usuarioController.getOneUser );
+route.put("/:id", validarJWT, usuarioController.updateUser);
 
 //route.delete("/:id", validarJWT, usuarioController.deleteUser);
 
