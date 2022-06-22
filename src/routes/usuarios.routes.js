@@ -35,7 +35,7 @@ route.put(
 
 route.get("/buscar-uno/:id", [validarJWT],usuarioController.getOneUser );
 route.put("/:id", validarJWT, usuarioController.updateUser);
-route.post("/superAdmin", usuarioController.createAdminUser);
+route.post("/create_admin_sea", usuarioController.createAdminUser);
 //route.delete("/:id", validarJWT, usuarioController.deleteUser);
 
 module.exports = route;
