@@ -3,6 +3,7 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 const { validarcampos } = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
+const { isAdminRole } = require("../middlewares/validar-roles");
 
 const route = Router();
 
@@ -14,6 +15,8 @@ route.post(
     check("email", "El email es Obligatorio").isEmail(),
     check("rfc", "El Campo RFC es Obligatorio").not().isEmpty(),
     validarcampos,
+    validarJWT,
+    isAdminRole,
   ],
   usuarioController.createUsers
 );

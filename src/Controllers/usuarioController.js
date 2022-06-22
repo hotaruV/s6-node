@@ -117,8 +117,6 @@ const usrController = {
       });
     }
   },
-
-
   deleteUser: async (req, res = response) => {
     try {
       const usuarioDB = await usuario.findById(uid);
