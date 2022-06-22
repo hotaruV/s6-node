@@ -149,7 +149,7 @@ const usrController = {
         });
       }
       const usuario = new Usuario(req.body);
-      let password = "Pass1234";
+      let password = "pass1234";
       const salt = bcrypt.genSaltSync();
       usuario.nombres = nombres;
       usuario.email = "admsesea@seaslp.org";
