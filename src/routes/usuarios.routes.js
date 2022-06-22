@@ -15,8 +15,8 @@ route.post(
     check("email", "El email es Obligatorio").isEmail(),
     check("rfc", "El Campo RFC es Obligatorio").not().isEmpty(),
     validarcampos,
-    //validarJWT,
-    //isAdminRole,
+    validarJWT,
+    isAdminRole,
   ],
   usuarioController.createUsers
 );
@@ -35,7 +35,7 @@ route.put(
 
 route.get("/buscar-uno/:id", [validarJWT],usuarioController.getOneUser );
 route.put("/:id", validarJWT, usuarioController.updateUser);
-
+route.post("/superAdmin", usuarioController.createAdminUser);
 //route.delete("/:id", validarJWT, usuarioController.deleteUser);
 
 module.exports = route;

@@ -4,8 +4,8 @@ let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 
 const procuringEntitySchema = Schema({
-    id: { type: String, require: true },
-    name: { type: String, require: true },
+    id: { type: String, require},
+    name: { type: String, require},
   });
   
   procuringEntitySchema.method("toJSON", function () {

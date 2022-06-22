@@ -3,14 +3,14 @@ const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const TederDocumentsSchema = Schema({
-  id: { type: String, require: true },
-  documentType: { type: String, require: true },
-  title: { type: String, require: true },
-  description: { type: String, require: true },
-  url: { type: String, require: true },
-  datePublished: { type: String, require: true, default: fecha },
-  format: { type: String, require: true },
-  language: { type: String, require: false },
+  id: { type: String, require},
+  documentType: { type: String, require},
+  title: { type: String, require},
+  description: { type: String, require},
+  url: { type: String, require},
+  datePublished: { type: String, require, default: fecha },
+  format: { type: String },
+  language: { type: String },
 });
 
 TederDocumentsSchema.method("toJSON", function () {

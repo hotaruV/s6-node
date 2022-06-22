@@ -16,7 +16,7 @@ const minValue = require("../models/tenders/minValue");
 
 const TendersController = {
   documents: async (req, res = response) => {
-    console.log(req.files);
+    /*console.log(req.files);
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({
         ok: false,
@@ -53,6 +53,40 @@ const TendersController = {
         msg: "Archivo subido exitosamente",
         nombre: originalName,
       });
+    });*/
+
+    let date = new Date();
+    let time = ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    let output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+
+    const Docs = new TendersDocuments(req.body);
+
+    function isUrl(s) {   
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      return regexp.test(s);
+    }
+
+    let ur = req.body.url;
+    let x = isUrl(ur);
+
+    if (!x) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Necesita ser una URL válida",
+      });
+    }
+
+    const uid = req.params.id;
+    Docs.documentType = "tenderNotice";
+    Docs.datePublished = output + time;
+    Docs.language = "es";
+    Docs.format;
+
+    await Docs.save();
+    return res.status(400).json({
+      ok: true,
+      documents: Docs,
+      msg: "Documento subido de manera exitosa",
     });
   },
   procuringEntity: async (req, res = response) => {

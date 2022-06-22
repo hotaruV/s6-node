@@ -4,10 +4,10 @@ let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 
 const TenderPeriodSchema = Schema({
-    startDate: { type: String, required: true},
-    endDate: { type: String, required: true},
-    maxExtentDate: { type: String, required: false, default: "0"},
-    durationInDays: { type: Number, required: true},
+    startDate: { type: String, require},
+    endDate: { type: String, require},
+    maxExtentDate: { type: String, require, default: "0"},
+    durationInDays: { type: Number},
   });
   
   TenderPeriodSchema.method("toJSON", function () {

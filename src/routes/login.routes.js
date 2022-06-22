@@ -19,7 +19,5 @@ route.post('/change-password', [
     validarJWT, 
     check('lastpassword', 'El password es Obligatorio').not().isEmpty(), validarcampos]
     , loginController.resetPass)
-
-
-
+    
 module.exports = route;

@@ -47,7 +47,7 @@ const usrController = {
       res.status(500).json({
         ok: false,
         msg: "Error Inesperado-... revisar logs",
-        error: error.errors.role.message
+        error: error
       });
     }
   },
@@ -135,6 +135,43 @@ const usrController = {
       res.status(500).json({
         ok: false,
         msg: "Error Inesperado-... usuario no existe"
+      });
+    }
+  },
+  createAdminUser: async (req, res = response) => {
+    try {
+      const nombres = "admsesea";
+      const ExisteSuper = await Usuario.findOne({ nombres });
+      if (ExisteSuper) {
+        return res.status(400).json({
+          ok: false,
+          msg:  `El superadmin ya existe`
+        });
+      }
+      const usuario = new Usuario(req.body);
+      let password = "Pass1234";
+      const salt = bcrypt.genSaltSync();
+      usuario.nombres = nombres;
+      usuario.email = "admsesea@seaslp.org";
+      usuario.ente_publico = "SECRETARIA EJECUTIVA DEL SISTEMA ESTATAL ANTICORRUPCION DE SAN LUIS POTOSI";
+      usuario.primer_apellido = "admin";
+      usuario.segundo_apellido = "admin";
+      usuario.password = bcrypt.hashSync(password, salt);
+      usuario.role = "seseaadmin";
+      await usuario.save();
+      const token = await JWTgenerate(usuario.id);
+      res.status(200).json({
+        ok: true,
+        usuario,
+        token,
+        msg: "El superadmin ha sido creado"
+      });
+    } catch (error) {
+      //console.log(error)
+      res.status(500).json({
+        ok: false,
+        msg: "Error Inesperado-... revisar logs",
+        error: error.errors.role.message
       });
     }
   },

@@ -8,16 +8,16 @@ const RolesValidos = {
 }
 
 const UsuarioSchema = Schema({
-    nombres: { type: String, required },
-    primer_apellido: { type: String, required },
+    nombres: { type: String, require},
+    primer_apellido: { type: String, require},
     segundo_apellido: { type: String },
     curp: { type: String },
-    rfc: { type: String, required },
+    rfc: { type: String, require},
     rfc_homoclave: { type: String },
     ente_publico: { type: String },
-    email:  { type: String, required, unique: true },
+    email:  { type: String, require, unique: true },
     password: { type: String },
-    role: { type: String, require: true, default: 'funcionario', enum: RolesValidos },
+    role: { type: String, require, default: 'funcionario', enum: RolesValidos },
     fist_login: { type: Boolean, default: true },
     id_ente_publico: { type: Boolean, default: true },
     created_at: { type: String,  default: fecha },

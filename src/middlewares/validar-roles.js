@@ -7,6 +7,7 @@ const isAdminRole  = async (req, res = response, next) => {
     const usuariodb = await Usuario.findById(req.uid);
     //console.log(usuariodb);
     if(!usuariodb){
+        console.log(req.uid);
         return res.status(400).json({
             msg: "el usuario no tiene rol correcto"
         })

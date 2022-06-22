@@ -3,8 +3,8 @@ const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const valueSchema = Schema({
-    amount: { type: Number, required: true },
-    currency: { type: String, required: true },
+    amount: { type: Number, require},
+    currency: { type: String, require},
 });
 
 valueSchema.method("toJSON", function () {
