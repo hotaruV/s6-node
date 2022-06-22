@@ -45,7 +45,7 @@ const loginController = {
       token,
     });
   },
-  resetPass: async (req, res = response) => {
+  ChangePass: async (req, res = response) => {
     try {
       //console.log(req.body);
       let { email, password, newpassword, lastpassword } = req.body;

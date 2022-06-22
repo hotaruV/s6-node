@@ -10,7 +10,12 @@ const usrController = {
     const hasta = Number(req.query.hasta) || 5;
     //console.log(desde);
     const [usuarios, total] = await Promise.all([
-      Usuario.find({}, "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at ").skip(desde).limit(hasta),
+      Usuario.find(
+        {},
+        "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at "
+      )
+        .skip(desde)
+        .limit(hasta),
       Usuario.countDocuments(),
     ]);
 
@@ -28,7 +33,7 @@ const usrController = {
       if (ExisteEmail) {
         return res.status(400).json({
           ok: false,
-          msg:  `El ${email} ya existe en nuestros registros, contacte adminstrador`
+          msg: `El ${email} ya existe en nuestros registros, contacte adminstrador`,
         });
       }
       const usuario = new Usuario(req.body);
@@ -47,33 +52,31 @@ const usrController = {
       res.status(500).json({
         ok: false,
         msg: "Error Inesperado-... revisar logs",
-        error: error
+        error: error,
       });
     }
   },
   getOneUser: async (req, res) => {
     try {
-        const uid = req.params.id;
-        const usuarioDB = await usuario.findById(uid);
-        if (!usuarioDB) {
-          return res.status(404).json({
-            ok: false,
-            msg: "No existe usuario"
-          });
-        }else{
-            return res.status(404).json({
-                ok: true,
-                user: usuarioDB
-            })
-        }
-        
-    
-      } catch (error) {
-        res.status(500).json({
+      const uid = req.params.id;
+      const usuarioDB = await usuario.findById(uid);
+      if (!usuarioDB) {
+        return res.status(404).json({
           ok: false,
-          msg: "Error Inesperado-... usuario no existe"
+          msg: "No existe usuario",
+        });
+      } else {
+        return res.status(404).json({
+          ok: true,
+          user: usuarioDB,
         });
       }
+    } catch (error) {
+      res.status(500).json({
+        ok: false,
+        msg: "Error Inesperado-... usuario no existe",
+      });
+    }
   },
 
   updateUser: async (req, res = response) => {
@@ -83,7 +86,7 @@ const usrController = {
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
-          msg: "No existe usuario"
+          msg: "No existe usuario",
         });
       }
 
@@ -91,14 +94,12 @@ const usrController = {
       //
       const { password, email, ...campos } = req.body;
 
-      
-      
       if (usuarioDB.email !== email) {
         const existeEmail = await Usuario.findOne({ email });
         if (existeEmail) {
           return res.status(400).json({
             ok: false,
-            msg: "Email no valido"
+            msg: "Email no valido",
           });
         }
       }
@@ -108,12 +109,12 @@ const usrController = {
       });
       res.status(200).json({
         ok: true,
-        usuario: userUpdated
+        usuario: userUpdated,
       });
     } catch (error) {
       res.status(500).json({
         ok: false,
-        msg: "Error Inesperado-... usuario no existe"
+        msg: "Error Inesperado-... usuario no existe",
       });
     }
   },
@@ -123,18 +124,18 @@ const usrController = {
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
-          msg: "No existe usuario"
+          msg: "No existe usuario",
         });
       }
       await Usuario.findByIdAndDelete(uid);
       res.status(200).json({
         ok: true,
-        msg: "Usuario Eliminado"
+        msg: "Usuario Eliminado",
       });
     } catch (error) {
       res.status(500).json({
         ok: false,
-        msg: "Error Inesperado-... usuario no existe"
+        msg: "Error Inesperado-... usuario no existe",
       });
     }
   },
@@ -145,7 +146,7 @@ const usrController = {
       if (ExisteSuper) {
         return res.status(400).json({
           ok: false,
-          msg:  `El superadmin ya existe`
+          msg: `El superadmin ya existe`,
         });
       }
       const usuario = new Usuario(req.body);
@@ -153,7 +154,8 @@ const usrController = {
       const salt = bcrypt.genSaltSync();
       usuario.nombres = nombres;
       usuario.email = "admsesea@seaslp.org";
-      usuario.ente_publico = "SECRETARIA EJECUTIVA DEL SISTEMA ESTATAL ANTICORRUPCION DE SAN LUIS POTOSI";
+      usuario.ente_publico =
+        "SECRETARIA EJECUTIVA DEL SISTEMA ESTATAL ANTICORRUPCION DE SAN LUIS POTOSI";
       usuario.primer_apellido = "admin";
       usuario.segundo_apellido = "admin";
       usuario.password = bcrypt.hashSync(password, salt);
@@ -164,16 +166,50 @@ const usrController = {
         ok: true,
         usuario,
         token,
-        msg: "El superadmin ha sido creado"
+        msg: "El superadmin ha sido creado",
       });
     } catch (error) {
       //console.log(error)
       res.status(500).json({
         ok: false,
         msg: "Error Inesperado-... revisar logs",
-        error: error.errors.role.message
+        error: error.errors.role.message,
       });
     }
+  },
+  resetPasswordUser: async (req, res = response) => {
+    try {
+      //console.log(req.body);
+      const uid = req.params.id;
+      const usuarioDB = await usuario.findById(uid);
+      //console.log(usuarioDB);
+      try {
+        const rfc = usuarioDB.rfc;
+        const salt = bcrypt.genSaltSync();
+        resetPass = bcrypt.hashSync(rfc, salt);
+
+        //console.log(newpassword);
+
+        const passwordUpdate = await Usuario.updateOne(
+          { _id: uid },
+          { $set: { password: resetPass } }
+        );
+        console.log(passwordUpdate);
+        if (passwordUpdate) {
+          return res.status(400).json({
+            ok: false,
+            msg: "Contraseña cambiada Satisfactoriamente",
+          });
+        }
+      } catch (error) {}
+    } catch (error) {
+      res.status(200).json({
+        ok: false,
+        msg: "El usuario no existe en la base de datos",
+      });
+    }
+
+    //const rfc = us;
   },
 };
 
