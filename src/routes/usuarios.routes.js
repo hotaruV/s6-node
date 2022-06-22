@@ -15,8 +15,8 @@ route.post(
     check("email", "El email es Obligatorio").isEmail(),
     check("rfc", "El Campo RFC es Obligatorio").not().isEmpty(),
     validarcampos,
-    validarJWT,
-    isAdminRole,
+    //validarJWT,
+    //isAdminRole,
   ],
   usuarioController.createUsers
 );

@@ -12,7 +12,7 @@ const isAdminRole  = async (req, res = response, next) => {
         })
     }
     const {role, email} = usuariodb;
-    if(role !== "admin_sea"){
+    if(role !== "seseaadmin"){
         return res.status(401).json({
             msg: `el usuario no es administrador`
         })
