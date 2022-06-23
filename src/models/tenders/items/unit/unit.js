@@ -13,7 +13,4 @@ unitSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model(
-  "edca_tender.item.unit",
-  unitSchema
-);
+module.exports = model("edca_tender.item.unit", unitSchema);

@@ -1,12 +1,5 @@
 const { response } = require("express");
-const { JWTgenerate } = require("../helpers/jwt");
-const { v4: uuidv4 } = require("uuid");
 const TendersDocuments = require("../models/tenders/documents");
-const Procuring = require("../models/tenders/procuringEntity");
-// const { actualizarImagen } = require('../helpers/actualizarImagen');
-const bcrypt = require("bcryptjs");
-const path = require("path");
-const fs = require("fs");
 const procuringEntity = require("../models/tenders/procuringEntity");
 const tenderPeriod = require("../models/tenders/tenderPeriod");
 const awardPeriod = require("../models/tenders/awardPeriod");
@@ -16,6 +9,9 @@ const minValue = require("../models/tenders/minValue");
 const additionalClassifications = require("../models/tenders/items/additionalClassifications");
 const classification = require("../models/tenders/items/classification");
 const tenders = require("../models/tenders/tenders");
+const valuesItm = require("../models/tenders/items/unit/values");
+const items = require("../models/tenders/items/items");
+const { populate } = require("../models/tenders/documents");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -195,12 +191,29 @@ const TendersController = {
       value: val,
     });
   },
-  classifications: async (req, res = response) => {
-    const val = new classification(req.body);
+  items: async (req, res = response) => {
+    console.log(req.body);
+    const item = new items(req.body);
+    await item.save();
+    return res.status(400).json({
+      item,
+    });
+  },
+  TendersItemValue: async (req, res = response) => {
+    const val = new valuesItm(req.body);
     await val.save();
+
     return res.status(400).json({
       ok: true,
-      classification: val,
+      value: val,
+    });
+  },
+  classifications: async (req, res = response) => {
+    const classifications = new classification(req.body);
+    await classifications.save();
+    return res.status(400).json({
+      ok: true,
+      classifications,
     });
   },
   additionalClassifications: async (req, res = response) => {
@@ -223,6 +236,7 @@ const TendersController = {
     const id = req.params.id;
     const tender = await tenders
       .findById(id)
+      .populate("items")
       .populate("minValue")
       .populate("value")
       .populate("procuringEntity")
