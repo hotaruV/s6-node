@@ -194,7 +194,7 @@ const usrController = {
           { _id: uid },
           { $set: { password: resetPass } }
         );
-        console.log(passwordUpdate);
+        //console.log(passwordUpdate);
         if (passwordUpdate) {
           return res.status(400).json({
             ok: false,
