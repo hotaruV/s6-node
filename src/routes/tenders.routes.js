@@ -12,5 +12,9 @@ route.post("/awardPeriod", [validarJWT], TendersController.awardPeriod);
 route.post("/enquiryPeriod", [validarJWT], TendersController.enquiryPeriod);
 route.post("/minValue", [validarJWT], TendersController.minValue);
 route.post("/value", [validarJWT], TendersController.value);
+route.post("/item/classifications", [validarJWT], TendersController.classifications);
+route.post("/item/additionalClassifications", [validarJWT], TendersController.additionalClassifications);
+route.post("/", [validarJWT], TendersController.tendersCreate);
+route.get("/:id", [validarJWT], TendersController.tendersShow);
 
 module.exports = route;

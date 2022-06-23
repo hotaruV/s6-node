@@ -78,7 +78,6 @@ const usrController = {
       });
     }
   },
-
   updateUser: async (req, res = response) => {
     try {
       const uid = req.params.id;
@@ -161,11 +160,9 @@ const usrController = {
       usuario.password = bcrypt.hashSync(password, salt);
       usuario.role = "seseaadmin";
       await usuario.save();
-      const token = await JWTgenerate(usuario.id);
+      //const token = await JWTgenerate(usuario.id);
       res.status(200).json({
         ok: true,
-        usuario,
-        token,
         msg: "El superadmin ha sido creado",
       });
     } catch (error) {

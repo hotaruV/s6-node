@@ -13,6 +13,9 @@ const awardPeriod = require("../models/tenders/awardPeriod");
 const enquiryPeriod = require("../models/tenders/enquiryPeriod");
 const value = require("../models/tenders/value");
 const minValue = require("../models/tenders/minValue");
+const additionalClassifications = require("../models/tenders/items/additionalClassifications");
+const classification = require("../models/tenders/items/classification");
+const tenders = require("../models/tenders/tenders");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -56,13 +59,20 @@ const TendersController = {
     });*/
 
     let date = new Date();
-    let time = ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    let output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+    let time =
+      " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    let output =
+      String(date.getDate()).padStart(2, "0") +
+      "/" +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      "/" +
+      date.getFullYear();
 
     const Docs = new TendersDocuments(req.body);
 
-    function isUrl(s) {   
-      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    function isUrl(s) {
+      var regexp =
+        /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
       return regexp.test(s);
     }
 
@@ -144,7 +154,7 @@ const TendersController = {
       awardPeriod: Period,
     });
   },
-  enquiryPeriod: async(req, res = response) => {
+  enquiryPeriod: async (req, res = response) => {
     let fecha_fin = new Date(req.body.endDate).getTime();
     let fecha_inicio = new Date(req.body.startDate).getTime();
 
@@ -167,7 +177,7 @@ const TendersController = {
       enquiryPeriod: Period,
     });
   },
-  minValue: async(req, res = response) => {
+  minValue: async (req, res = response) => {
     const val = new minValue(req.body);
     await val.save();
 
@@ -176,7 +186,7 @@ const TendersController = {
       minValue: val,
     });
   },
-  value: async(req, res = response) => {
+  value: async (req, res = response) => {
     const val = new value(req.body);
     await val.save();
 
@@ -185,6 +195,51 @@ const TendersController = {
       value: val,
     });
   },
+  classifications: async (req, res = response) => {
+    const val = new classification(req.body);
+    await val.save();
+    return res.status(400).json({
+      ok: true,
+      classification: val,
+    });
+  },
+  additionalClassifications: async (req, res = response) => {
+    const val = new additionalClassifications(req.body);
+    await val.save();
+    return res.status(400).json({
+      ok: true,
+      additionalClassifications: val,
+    });
+  },
+  tendersCreate: async (req, res = response) => {
+    const tender = new tenders(req.body);
+    await tender.save();
+    return res.status(400).json({
+      ok: true,
+      tender,
+    });
+  },
+  tendersShow: async (req, res = response) => {
+    const id = req.params.id;
+    const tender = await tenders
+      .findById(id)
+      .populate("minValue")
+      .populate("value")
+      .populate("procuringEntity")
+      .populate("tenderPeriod")
+      .populate("awardPeriod")
+      .populate("enquiryPeriod");
+    if (!tender) {
+      return res.status(404).json({
+        ok: false,
+        msg: "No existe usuario",
+      });
+    }
+    res.status(200).json({
+      tender,
+    });
+  },
+  tendersUpdate: async (req, res = response) => {},
 };
 
 module.exports = TendersController;
