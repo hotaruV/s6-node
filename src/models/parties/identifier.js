@@ -15,4 +15,4 @@ identifierSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_parties.identifier", identifierSchema);
+module.exports = model("parties.identifier", identifierSchema);

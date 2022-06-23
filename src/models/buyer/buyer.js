@@ -13,4 +13,4 @@ Buyer.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_buyer", Buyer);
+module.exports = model("buyer", Buyer);

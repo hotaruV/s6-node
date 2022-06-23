@@ -7,17 +7,17 @@ const ItemsSchema = Schema({
   classification: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "edca_tender.item.classification",
+    ref: "tender.item.classification",
   },
   additionalClassifications: [
     {
       type: Schema.Types.ObjectId,
       require,
-      ref: "edca_tender.item.additionalClassifications",
+      ref: "tender.item.additionalClassifications",
     },
   ],
   quantity: { type: Number, require },
-  unit : { type: Schema.Types.ObjectId, require,ref: "edca_tender.item.unit"}
+  unit : { type: Schema.Types.ObjectId, require,ref: "tender.item.unit"}
 });
 
 ItemsSchema.method("toJSON", function () {
@@ -26,4 +26,4 @@ ItemsSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender.items", ItemsSchema);
+module.exports = model("tender.items", ItemsSchema);

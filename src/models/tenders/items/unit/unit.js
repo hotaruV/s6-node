@@ -4,7 +4,7 @@ let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const unitSchema = Schema({
   name: { type: String, require },
-  values: { type: Schema.Types.ObjectId, require,ref: "edca_tender.item.unit.value"}
+  values: { type: Schema.Types.ObjectId, require,ref: "tender.item.unit.value"}
 });
 
 unitSchema.method("toJSON", function () {
@@ -13,4 +13,4 @@ unitSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender.item.unit", unitSchema);
+module.exports = model("tender.item.unit", unitSchema);

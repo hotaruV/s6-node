@@ -14,6 +14,6 @@ ItemValueSchema.method("toJSON", function () {
 });
 
 module.exports = model(
-  "edca_tender.item.unit.value",
+  "tender.item.unit.value",
   ItemValueSchema
 );

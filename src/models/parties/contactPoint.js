@@ -16,4 +16,4 @@ contactPointSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_parties.contactPoint", contactPointSchema);
+module.exports = model("parties.contactPoint", contactPointSchema);

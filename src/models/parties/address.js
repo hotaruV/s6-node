@@ -16,4 +16,4 @@ addressSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_parties.address", addressSchema);
+module.exports = model("parties.address", addressSchema);

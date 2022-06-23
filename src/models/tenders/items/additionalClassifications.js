@@ -16,6 +16,6 @@ additionalClassificationsSchema.method("toJSON", function () {
 });
 
 module.exports = model(
-  "edca_tender.item.additionalClassifications",
+  "tender.item.additionalClassifications",
   additionalClassificationsSchema
 );

@@ -6,13 +6,13 @@ const TendersSchema = Schema({
   title: { type: String, require },
   description: { type: String, require },
   status: { type: String, require },
-  items: [{ type: Schema.Types.ObjectId, require, ref: "edca_tender.items" }],
+  items: [{ type: Schema.Types.ObjectId, require, ref: "tender.items" }],
   minValue: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "edca_tender.minValue",
+    ref: "tender.minValue",
   },
-  value: { type: Schema.Types.ObjectId, require, ref: "edca_tender.value" },
+  value: { type: Schema.Types.ObjectId, require, ref: "tender.value" },
   procurementMethod: { type: String, require },
   procurementMethodRationale: { type: String, require },
   awardCriteria: { type: String, require },
@@ -21,23 +21,23 @@ const TendersSchema = Schema({
   enquiryPeriod: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "edca_tender.enquiryPeriod",
+    ref: "tender.enquiryPeriod",
   },
   hasEnquiries: { type: Boolean, require, default: false },
   tenderPeriod: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "edca_tender.tenderPeriod",
+    ref: "tender.tenderPeriod",
   },
   awardPeriod: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "edca_tender.awardperiod",
+    ref: "tender.awardperiod",
   },
   procuringEntity: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "edca_tender.procuringentity",
+    ref: "tender.procuringentity",
   },
   documents: [
     {
@@ -59,4 +59,4 @@ TendersSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender", TendersSchema);
+module.exports = model("tender", TendersSchema);

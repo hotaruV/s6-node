@@ -9,10 +9,10 @@ const PartyRoles = {
 }
 
 const PartiesSchema = new Schema({
-    identifier: { type: Schema.Types.ObjectId, require, ref: 'edca_parties.identifier' },
+    identifier: { type: Schema.Types.ObjectId, require, ref: 'parties.identifier' },
     name: { type: String, require },
-    address: { type: Schema.Types.ObjectId, require, ref: 'edca_parties.address' },
-    contactPoint: { type: Schema.Types.ObjectId, require, ref: 'edca_parties.contactPoint' },
+    address: { type: Schema.Types.ObjectId, require, ref: 'parties.address' },
+    contactPoint: { type: Schema.Types.ObjectId, require, ref: 'parties.contactPoint' },
     roles: [
         {
             type: Object, enum: PartyRoles,
@@ -27,4 +27,4 @@ PartiesSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_partie", PartiesSchema);
+module.exports = model("partie", PartiesSchema);

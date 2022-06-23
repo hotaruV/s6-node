@@ -15,4 +15,4 @@ enquiryPeriodSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender.enquiryPeriod", enquiryPeriodSchema);
+module.exports = model("tender.enquiryPeriod", enquiryPeriodSchema);

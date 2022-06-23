@@ -15,4 +15,4 @@ awardPeriodSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender.awardperiod", awardPeriodSchema);
+module.exports = model("tender.awardperiod", awardPeriodSchema);

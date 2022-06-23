@@ -29,4 +29,4 @@ UsuarioSchema.method('toJSON', function () {
     return object
 })
 
-module.exports = model('edca_users', UsuarioSchema)
+module.exports = model('admin_users', UsuarioSchema)

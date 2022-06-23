@@ -13,4 +13,4 @@ minValueSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender.minValue", minValueSchema);
+module.exports = model("tender.minValue", minValueSchema);

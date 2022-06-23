@@ -16,4 +16,4 @@ const TenderPeriodSchema = Schema({
     return object;
   });
   
-  module.exports = model("edca_tender.tenderPeriod", TenderPeriodSchema);
+  module.exports = model("tender.tenderPeriod", TenderPeriodSchema);

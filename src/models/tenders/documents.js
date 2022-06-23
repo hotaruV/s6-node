@@ -19,4 +19,4 @@ TederDocumentsSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("edca_tender.document", TederDocumentsSchema);
+module.exports = model("tender.document", TederDocumentsSchema);
