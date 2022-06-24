@@ -9,18 +9,18 @@ const PartyRoles = {
 }
 
 const PartiesSchema = new Schema({
-    identifier: { type: Schema.Types.ObjectId, require, ref: 'parties.identifier' },
+    identifier: { type: Schema.Types.ObjectId, require, ref: 'parties.identifier' ,autopopulate: true},
     name: { type: String, require },
-    address: { type: Schema.Types.ObjectId, require, ref: 'parties.address' },
-    contactPoint: { type: Schema.Types.ObjectId, require, ref: 'parties.contactPoint' },
+    address: { type: Schema.Types.ObjectId, require, ref: 'parties.address' ,autopopulate: true},
+    contactPoint: { type: Schema.Types.ObjectId, require, ref: 'parties.contactPoint' ,autopopulate: true},
     roles: [
         {
-            type: Object, enum: PartyRoles,
+            type: Object, enum: PartyRoles, autopopulate: true,
         }
     ],
     id: { type: String, require },
 });
-
+PartiesSchema.plugin(require('mongoose-autopopulate'));
 PartiesSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   object.uid = _id;

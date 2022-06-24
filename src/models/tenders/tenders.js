@@ -11,8 +11,9 @@ const TendersSchema = Schema({
     type: Schema.Types.ObjectId,
     require,
     ref: "tender.minValue",
+    autopopulate: true
   },
-  value: { type: Schema.Types.ObjectId, require, ref: "tender.value" },
+  value: { type: Schema.Types.ObjectId, require, ref: "tender.value", autopopulate: true},
   procurementMethod: { type: String, require },
   procurementMethodRationale: { type: String, require },
   awardCriteria: { type: String, require },
@@ -22,22 +23,26 @@ const TendersSchema = Schema({
     type: Schema.Types.ObjectId,
     require,
     ref: "tender.enquiryPeriod",
+    autopopulate: true
   },
   hasEnquiries: { type: Boolean, require, default: false },
   tenderPeriod: {
     type: Schema.Types.ObjectId,
     require,
     ref: "tender.Period",
+    autopopulate: true
   },
   awardPeriod: {
     type: Schema.Types.ObjectId,
     require,
     ref: "tender.awardperiod",
+    autopopulate: true
   },
   procuringEntity: {
     type: Schema.Types.ObjectId,
     require,
     ref: "tender.procuringentity",
+    autopopulate: true
   },
   documents: [
     {

@@ -3,8 +3,8 @@ const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const Buyer = new Schema({
-    id: { type: String, require },
-    name: { type: String, require },
+    id: { type: String, require ,autopopulate: true},
+    name: { type: String, require ,autopopulate: true},
 });
 
 Buyer.method("toJSON", function () {
@@ -12,5 +12,5 @@ Buyer.method("toJSON", function () {
   object.uid = _id;
   return object;
 });
-
+Buyer.plugin(require('mongoose-autopopulate'));
 module.exports = model("buyer", Buyer);
