@@ -21,10 +21,9 @@ const ItemsSchema = Schema({
   unit : { type: Schema.Types.ObjectId, require,ref: "tender.item.unit" }
 });
 ItemsSchema.plugin(require('mongoose-autopopulate'));
-ItemsSchema.method("toJSON", function () {
-  const { __v, _id, ...object } = this.toObject();
-  object.uid = _id;
-  return object;
-});
+ItemsSchema.methods.toJSON = function () {
+  const { __v, _id, ...item } = this.toObject();
+  return item;
+};
 
 module.exports = model("tender.items", ItemsSchema);
