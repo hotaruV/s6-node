@@ -236,13 +236,12 @@ const TendersController = {
     const id = req.params.id;
     const tender = await tenders
       .findById(id)
-      .populate("items")
-      .populate("minValue")
-      .populate("value")
-      .populate("procuringEntity")
-      .populate("tenderPeriod")
-      .populate("awardPeriod")
-      .populate("enquiryPeriod");
+      .populate("minValue",'-__v')
+      .populate("value",'-__v')
+      .populate("procuringEntity",'name')
+      .populate("tenderPeriod",'-__v')
+      .populate("awardPeriod",'-__v')
+      .populate("enquiryPeriod", '-__v');
     if (!tender) {
       return res.status(404).json({
         ok: false,

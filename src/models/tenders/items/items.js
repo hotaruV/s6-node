@@ -1,4 +1,4 @@
-const { Schema, Model, model } = require("mongoose");
+const { Schema, model } = require("mongoose");
 const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
@@ -14,12 +14,13 @@ const ItemsSchema = Schema({
       type: Schema.Types.ObjectId,
       require,
       ref: "tender.item.additionalClassifications",
+      autopopulate: true
     },
   ],
   quantity: { type: Number, require },
-  unit : { type: Schema.Types.ObjectId, require,ref: "tender.item.unit"}
+  unit : { type: Schema.Types.ObjectId, require,ref: "tender.item.unit" }
 });
-
+ItemsSchema.plugin(require('mongoose-autopopulate'));
 ItemsSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   object.uid = _id;

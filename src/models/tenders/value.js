@@ -7,10 +7,10 @@ const valueSchema = Schema({
     currency: { type: String, require},
 });
 
-valueSchema.method("toJSON", function () {
-  const { __v, _id, ...object } = this.toObject();
+valueSchema.methods.toJson = function () {
+  const { __v, _id, ...data } = this.toObject();
   object.uid = _id;
-  return object;
-});
+  return data;
+};
 
 module.exports = model("tender.value", valueSchema);

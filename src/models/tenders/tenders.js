@@ -6,7 +6,7 @@ const TendersSchema = Schema({
   title: { type: String, require },
   description: { type: String, require },
   status: { type: String, require },
-  items: [{ type: Schema.Types.ObjectId, require, ref: "tender.items" }],
+  items: [{ type: Schema.Types.ObjectId, require, ref: "tender.items", autopopulate: true }],
   minValue: {
     type: Schema.Types.ObjectId,
     require,
@@ -27,7 +27,7 @@ const TendersSchema = Schema({
   tenderPeriod: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "tender.tenderPeriod",
+    ref: "tender.Period",
   },
   awardPeriod: {
     type: Schema.Types.ObjectId,
@@ -52,11 +52,11 @@ const TendersSchema = Schema({
     },
   ],
 });
-
-TendersSchema.method("toJSON", function () {
+TendersSchema.plugin(require('mongoose-autopopulate'));
+TendersSchema.methods.toJSON = function () {
   const { __v, _id, ...object } = this.toObject();
   object.ocid = _id;
   return object;
-});
+};
 
 module.exports = model("tender", TendersSchema);
