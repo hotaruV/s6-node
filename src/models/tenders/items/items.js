@@ -8,6 +8,7 @@ const ItemsSchema = Schema({
     type: Schema.Types.ObjectId,
     require,
     ref: "tender.item.classification",
+    autopopulate: true
   },
   additionalClassifications: [
     {
