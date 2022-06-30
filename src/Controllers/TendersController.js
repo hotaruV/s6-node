@@ -12,6 +12,7 @@ const tenders = require("../models/tenders/tenders");
 const valuesItm = require("../models/tenders/items/unit/values");
 const items = require("../models/tenders/items/items");
 const { populate } = require("../models/tenders/documents");
+const getID = require("../helpers/getId");
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -192,13 +193,25 @@ const TendersController = {
     });
   },
   items: async (req, res = response) => {
-    console.log(req.body);
     const item = new items(req.body);
     await item.save();
     return res.status(400).json({
       item,
     });
   },
+  // itemsShow: async (req, res = response) => {
+  //   const id = req.params.id;
+  //   let ID = getID(items, id);
+  //   if (!items) {
+  //     return res.status(404).json({
+  //       ok: false,
+  //       msg: "No existe usuario",
+  //     });
+  //   }
+  //   res.status(200).json({
+  //     items,
+  //   });
+  // },
   TendersItemValue: async (req, res = response) => {
     const val = new valuesItm(req.body);
     await val.save();
@@ -234,6 +247,7 @@ const TendersController = {
   },
   tendersShow: async (req, res = response) => {
     const id = req.params.id;
+    let ID = getID(tenders, id);
     const tender = await tenders
       .findById(id)
       .populate("minValue",'-__v')

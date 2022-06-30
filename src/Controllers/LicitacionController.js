@@ -3,7 +3,7 @@ const { JWTgenerate } = require("../helpers/jwt");
 const { v4: uuidv4 } = require("uuid");
 const licitacion = require("../models/licitacion");
 const { populate } = require("../models/usuario");
-const getID = require("../helpers/getId")
+const getID = require("../helpers/getId");
 
 const LicitacionController = {
   licitacionCreate: async (req, res = response) => {
@@ -16,9 +16,8 @@ const LicitacionController = {
   },
 
   licitacionShow: async (req, res = response) => {
-    let getID = GetID(licitacion, req.params.id);
-
     const id = req.params.id;
+    let ID = getID(licitacion);
     const lic = await licitacion
       .findById(id)
       .populate("parties")

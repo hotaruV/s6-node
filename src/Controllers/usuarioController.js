@@ -3,6 +3,7 @@ const Usuario = require("../models/usuario");
 const bcrypt = require("bcryptjs");
 const usuario = require("../models/usuario");
 const { JWTgenerate } = require("../helpers/jwt");
+const getID = require("../helpers/getId");
 
 const usrController = {
   getUser: async (req, res) => {
@@ -59,6 +60,7 @@ const usrController = {
   getOneUser: async (req, res) => {
     try {
       const uid = req.params.id;
+      let ID = getID(usuario, uid);
       const usuarioDB = await usuario.findById(uid);
       if (!usuarioDB) {
         return res.status(404).json({
