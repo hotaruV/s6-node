@@ -6,6 +6,6 @@ const route = Router();
 route.use(E_fileUpload())
 
 route.post("/licitacion", [validarJWT], LicitacionController.licitacionCreate);
-route.get("/licitacion/:id", [validarJWT], LicitacionController.licitacionShow);
+route.get("/licitacion/:id",  LicitacionController.licitacionShow);
 
 module.exports = route;
