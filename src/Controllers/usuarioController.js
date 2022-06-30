@@ -60,7 +60,7 @@ const usrController = {
   getOneUser: async (req, res) => {
     try {
       const uid = req.params.id;
-      let ID = getID(usuario, uid);
+      let ID = getID(usuario, true);
       const usuarioDB = await usuario.findById(uid);
       if (!usuarioDB) {
         return res.status(404).json({
