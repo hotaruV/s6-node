@@ -4,8 +4,9 @@ const getID = async (model, ocid = false) => {
   numID = cont + 1;
   if (ocid) {
     return setOCID(numID);
-  }
-  return numID;
+  }else{
+    return numID;
+  } 
 };
 
 const setOCID = (id) => {

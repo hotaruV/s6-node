@@ -5,10 +5,21 @@ const identifier = require("../models/parties/identifier");
 const address = require("../models/parties/address");
 const contactPoint = require("../models/parties/contactPoint");
 const parties = require("../models/parties/parties");
+const schemaGen = require("../helpers/id_parties")
 
 const PartiesController = {
   identifier: async (req, res = response) => {
     const ide = new identifier(req.body);
+
+    let z=0;
+    do {
+      let scheme = schemaGen();
+      const ExisteScheme = await identifier.findOne({scheme});
+      if (!ExisteScheme) {
+        z=1;
+      }
+    console.log(scheme);
+    }while(z!=1);
 
     function isUrl(s) {
       var regexp =
@@ -93,9 +104,9 @@ const PartiesController = {
     const id = req.params.id;
     const partie = await parties
       .findById(id)
-      .populate("identifier")
-      .populate("address")
-      .populate("contactPoint");
+      .populate("identifier",'-__v')
+      .populate("address",'-__v')
+      .populate("contactPoint",'-__v');
     if (!partie) {
       return res.status(404).json({
         ok: false,

@@ -20,9 +20,9 @@ const LicitacionController = {
     let ID = getID(licitacion);
     const lic = await licitacion
       .findById(id)
-      .populate("parties")
-      .populate("buyer")
-      .populate("tender");
+      .populate("parties",'-__v')
+      .populate("buyer",'-__v')
+      .populate("tender",'-__v');
     if (!lic) {
       return res.status(404).json({
         ok: false,
