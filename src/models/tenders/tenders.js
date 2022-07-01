@@ -3,6 +3,7 @@ const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const TendersSchema = Schema({
+  id: { type: String, require},
   title: { type: String, require },
   description: { type: String, require },
   status: { type: String, require },
@@ -46,7 +47,7 @@ const TendersSchema = Schema({
   },
   documents: [
     {
-      ocid: { type: String, require },
+      id: { type: String, require },
       documentType: { type: String, require },
       title: { type: String, require },
       description: { type: String, require },
@@ -58,10 +59,9 @@ const TendersSchema = Schema({
   ],
 });
 TendersSchema.plugin(require('mongoose-autopopulate'));
-TendersSchema.methods.toJSON = function () {
+TendersSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
-  
   return object;
-};
+});
 
 module.exports = model("tender", TendersSchema);

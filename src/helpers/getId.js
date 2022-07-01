@@ -14,7 +14,7 @@ const setOCID = (id) => {
   idi = zfill(id, 5);
   ocid += `000-${idi}`;
 
-  console.log(ocid);
+  //console.log(ocid);
   return ocid;
 };
 

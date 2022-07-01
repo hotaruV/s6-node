@@ -259,7 +259,8 @@ const TendersController = {
   tendersCreate: async (req, res = response) => {
     const tender = new tenders(req.body);
     let count = await getID(tenders, true);
-    tender.id = count;
+    tender.id =  `${count}-tender`;
+    console.log(tender.id);
     await tender.save();
     return res.status(400).json({
       ok: true,
@@ -268,9 +269,9 @@ const TendersController = {
   },
   tendersShow: async (req, res = response) => {
     const id = req.params.id;
-    let ID = getID(tenders, id);
+    console.log(id);
     const tender = await tenders
-      .findById(id)
+      .findOne({"id" : id})
       .populate("minValue", "-__v")
       .populate("value", "-__v")
       .populate("procuringEntity", "name")
