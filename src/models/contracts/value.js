@@ -13,4 +13,4 @@ valueSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("item.value", valueSchema);
+module.exports = model("contract.value", valueSchema);
