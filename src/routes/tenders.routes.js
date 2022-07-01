@@ -17,6 +17,7 @@ route.post("/item", [validarJWT], TendersController.items);
 route.post("/item/classifications", [validarJWT], TendersController.classifications);
 route.post("/item/additionalClassifications", [validarJWT], TendersController.additionalClassifications);
 route.post("/item/TendersItemValue", [validarJWT], TendersController.TendersItemValue);
+route.post("/item/TendersItemUnit", [validarJWT], TendersController.TendersItemUnit);
 route.post("/", [validarJWT], TendersController.tendersCreate);
 route.get("/:id", [validarJWT], TendersController.tendersShow);
 
