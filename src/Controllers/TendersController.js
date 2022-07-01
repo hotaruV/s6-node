@@ -11,7 +11,6 @@ const classification = require("../models/tenders/items/classification");
 const tenders = require("../models/tenders/tenders");
 const valuesItm = require("../models/tenders/items/unit/values");
 const items = require("../models/tenders/items/items");
-const { populate } = require("../models/tenders/documents");
 const getID = require("../helpers/getId");
 
 const TendersController = {
@@ -162,11 +161,16 @@ const TendersController = {
       });
     }
 
+    
     let maxExtend2 = req.body.maxExtentDate;
     let diff = fecha_fin - fecha_inicio;
     let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
     const Period = new enquiryPeriod(req.body);
+    let count = await getID(enquiryPeriod);
+    
     Period.durationInDays = period;
+    Period.id = count;
+    //console.log(count);
     await Period.save();
 
     return res.status(400).json({
