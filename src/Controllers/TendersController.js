@@ -65,7 +65,7 @@ const TendersController = {
       date.getFullYear();
 
     const Docs = new TendersDocuments(req.body);
-
+    
     function isUrl(s) {
       var regexp =
         /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -82,12 +82,12 @@ const TendersController = {
       });
     }
 
-    const uid = req.params.id;
     Docs.documentType = "tenderNotice";
     Docs.datePublished = output + time;
     Docs.language = "es";
     Docs.format;
-
+    let count = await getID(TendersDocuments);
+    Docs.id = count;
     await Docs.save();
     return res.status(400).json({
       ok: true,
@@ -96,8 +96,9 @@ const TendersController = {
     });
   },
   procuringEntity: async (req, res = response) => {
-    const uid = req.params.id;
     const Procuring = new procuringEntity(req.body);
+    let count = await getID(procuringEntity);
+    Procuring.id = count;
     await Procuring.save();
     return res.status(400).json({
       ok: true,
@@ -107,7 +108,6 @@ const TendersController = {
   tenderPeriod: async (req, res = response) => {
     let fecha_fin = new Date(req.body.endDate).getTime();
     let fecha_inicio = new Date(req.body.startDate).getTime();
-
     if (fecha_inicio > fecha_fin) {
       return res.status(400).json({
         ok: true,
@@ -120,6 +120,8 @@ const TendersController = {
     let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
     const Period = new tenderPeriod(req.body);
     Period.durationInDays = period;
+    let count = await getID(tenderPeriod);
+    Period.id = count;
     await Period.save();
 
     return res.status(400).json({
@@ -141,13 +143,15 @@ const TendersController = {
     let maxExtend2 = req.body.maxExtentDate;
     let diff = fecha_fin - fecha_inicio;
     let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
-    const Period = new awardPeriod(req.body);
-    Period.durationInDays = period;
-    await Period.save();
+    const PeriodAw = new awardPeriod(req.body);
+    PeriodAw.durationInDays = period;
+    let count = await getID(awardPeriod);
+    PeriodAw.id = count;
+    await PeriodAw.save();
 
     return res.status(400).json({
       ok: true,
-      awardPeriod: Period,
+      awardPeriod: PeriodAw,
     });
   },
   enquiryPeriod: async (req, res = response) => {
@@ -161,13 +165,12 @@ const TendersController = {
       });
     }
 
-    
     let maxExtend2 = req.body.maxExtentDate;
     let diff = fecha_fin - fecha_inicio;
     let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
     const Period = new enquiryPeriod(req.body);
     let count = await getID(enquiryPeriod);
-    
+
     Period.durationInDays = period;
     Period.id = count;
     //console.log(count);
@@ -180,6 +183,8 @@ const TendersController = {
   },
   minValue: async (req, res = response) => {
     const val = new minValue(req.body);
+    let count = await getID(minValue);
+    val.id = count;
     await val.save();
 
     return res.status(400).json({
@@ -189,6 +194,8 @@ const TendersController = {
   },
   value: async (req, res = response) => {
     const val = new value(req.body);
+    let count = await getID(value);
+    val.id = count;
     await val.save();
 
     return res.status(400).json({
@@ -198,6 +205,8 @@ const TendersController = {
   },
   items: async (req, res = response) => {
     const item = new items(req.body);
+    let count = await getID(items);
+    item.id = count;
     await item.save();
     return res.status(400).json({
       item,
@@ -218,6 +227,8 @@ const TendersController = {
   // },
   TendersItemValue: async (req, res = response) => {
     const val = new valuesItm(req.body);
+    let count = await getID(valuesItm);
+    val.id = count;
     await val.save();
 
     return res.status(400).json({
@@ -227,6 +238,8 @@ const TendersController = {
   },
   classifications: async (req, res = response) => {
     const classifications = new classification(req.body);
+    let count = await getID(classification);
+    classifications.id = count;
     await classifications.save();
     return res.status(400).json({
       ok: true,
@@ -235,6 +248,8 @@ const TendersController = {
   },
   additionalClassifications: async (req, res = response) => {
     const val = new additionalClassifications(req.body);
+    let count = await getID(additionalClassifications);
+    val.id = count;
     await val.save();
     return res.status(400).json({
       ok: true,
@@ -243,6 +258,8 @@ const TendersController = {
   },
   tendersCreate: async (req, res = response) => {
     const tender = new tenders(req.body);
+    let count = await getID(tenders, true);
+    tender.id = count;
     await tender.save();
     return res.status(400).json({
       ok: true,
@@ -254,16 +271,16 @@ const TendersController = {
     let ID = getID(tenders, id);
     const tender = await tenders
       .findById(id)
-      .populate("minValue",'-__v')
-      .populate("value",'-__v')
-      .populate("procuringEntity",'name')
-      .populate("tenderPeriod",'-__v')
-      .populate("awardPeriod",'-__v')
-      .populate("enquiryPeriod", '-__v');
+      .populate("minValue", "-__v")
+      .populate("value", "-__v")
+      .populate("procuringEntity", "name")
+      .populate("tenderPeriod", "-__v")
+      .populate("awardPeriod", "-__v")
+      .populate("enquiryPeriod", "-__v");
     if (!tender) {
       return res.status(404).json({
         ok: false,
-        msg: "No existe usuario",
+        msg: "No hay registro hecho",
       });
     }
     res.status(200).json({

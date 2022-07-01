@@ -3,6 +3,7 @@ const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const ItemsSchema = Schema({
+  id: { type: String, require },
   description: { type: String, require },
   classification: {
     type: Schema.Types.ObjectId,
@@ -22,9 +23,9 @@ const ItemsSchema = Schema({
   unit : { type: Schema.Types.ObjectId, require,ref: "tender.item.unit" }
 });
 ItemsSchema.plugin(require('mongoose-autopopulate'));
-ItemsSchema.methods.toJSON = function () {
-  const { __v, _id, ...item } = this.toObject();
-  return item;
-};
+ItemsSchema.method("toJSON", function () {
+  const { __v, _id, ...object } = this.toObject();
+  return object;
+});
 
 module.exports = model("tender.items", ItemsSchema);

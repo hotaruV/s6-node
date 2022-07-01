@@ -3,14 +3,14 @@ const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
 const valueSchema = Schema({
-    amount: { type: Number, require},
-    currency: { type: String, require},
+  id: { type: String, require },
+  amount: { type: Number, require },
+  currency: { type: String, require },
 });
 
-valueSchema.methods.toJson = function () {
-  const { __v, _id, ...data } = this.toObject();
-  object.uid = _id;
-  return data;
-};
+valueSchema.method("toJSON", function () {
+  const { __v, _id, ...object } = this.toObject();
+  return object;
+});
 
 module.exports = model("tender.value", valueSchema);

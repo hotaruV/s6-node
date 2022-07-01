@@ -46,7 +46,7 @@ const TendersSchema = Schema({
   },
   documents: [
     {
-      id: { type: String, require },
+      ocid: { type: String, require },
       documentType: { type: String, require },
       title: { type: String, require },
       description: { type: String, require },
@@ -60,7 +60,7 @@ const TendersSchema = Schema({
 TendersSchema.plugin(require('mongoose-autopopulate'));
 TendersSchema.methods.toJSON = function () {
   const { __v, _id, ...object } = this.toObject();
-  object.ocid = _id;
+  
   return object;
 };
 

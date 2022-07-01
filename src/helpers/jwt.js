@@ -6,7 +6,7 @@ const JWTgenerate = (uid) => {
             uid
         }
         jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-            expiresIn: '24h'
+            expiresIn: process.env.TOKEN_TIME_VALIDATE
         }, (err, token) => {
             if (err) {
                 console.log(err)

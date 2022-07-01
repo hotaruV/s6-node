@@ -7,10 +7,9 @@ const procuringEntitySchema = Schema({
   name: { type: String, require },
 });
 
-procuringEntitySchema.methods.ToJSON = function () {
+procuringEntitySchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
-  object.uid = _id;
   return object;
-};
+});
 
 module.exports = model("tender.procuringentity", procuringEntitySchema);
