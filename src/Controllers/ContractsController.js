@@ -1,7 +1,12 @@
 const { response } = require("express");
 const getID = require("../helpers/getId");
-const contracts = require("../models/contracts/contracts");
+const contratos = require("../models/contracts/contracts");
 const ContractPeriod = require("../models/contracts/contractPeriod");
+const items = require("../models/contracts/items/items");
+const value = require("../models/contracts/value");
+const additionalClassifications = require("../models/contracts/items/additionalClassifications");
+const classification = require("../models/contracts/items/classification");
+const contracts = require("../models/contracts/contracts");
 
 const ContractsController = {
   documents: async (req, res = response) => {
@@ -101,7 +106,7 @@ const ContractsController = {
     let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
     const Period = new ContractPeriod(req.body);
     Period.durationInDays = period;
-    let count = await getID(tenderPeriod);
+    let count = await getID(ContractPeriod);
     Period.id = count;
     await Period.save();
 
@@ -110,71 +115,10 @@ const ContractsController = {
       period: Period,
     });
   },
-  awardPeriod: async (req, res = response) => {
-    let fecha_fin = new Date(req.body.endDate).getTime();
-    let fecha_inicio = new Date(req.body.startDate).getTime();
-
-    if (fecha_inicio > fecha_fin) {
-      return res.status(400).json({
-        ok: true,
-        msg: "Fecha final no debe se menor a la fecha de inicio",
-      });
-    }
-
-    let maxExtend2 = req.body.maxExtentDate;
-    let diff = fecha_fin - fecha_inicio;
-    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
-    const PeriodAw = new awardPeriod(req.body);
-    PeriodAw.durationInDays = period;
-    let count = await getID(awardPeriod);
-    PeriodAw.id = count;
-    await PeriodAw.save();
-
-    return res.status(400).json({
-      ok: true,
-      awardPeriod: PeriodAw,
-    });
-  },
-  enquiryPeriod: async (req, res = response) => {
-    let fecha_fin = new Date(req.body.endDate).getTime();
-    let fecha_inicio = new Date(req.body.startDate).getTime();
-
-    if (fecha_inicio > fecha_fin) {
-      return res.status(400).json({
-        ok: true,
-        msg: "Fecha final no debe se menor a la fecha de inicio",
-      });
-    }
-
-    let maxExtend2 = req.body.maxExtentDate;
-    let diff = fecha_fin - fecha_inicio;
-    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
-    const Period = new enquiryPeriod(req.body);
-    let count = await getID(enquiryPeriod);
-
-    Period.durationInDays = period;
-    Period.id = count;
-    //console.log(count);
-    await Period.save();
-
-    return res.status(400).json({
-      ok: true,
-      enquiryPeriod: Period,
-    });
-  },
-  minValue: async (req, res = response) => {
-    const val = new minValue(req.body);
-    let count = await getID(minValue);
-    val.id = count;
-    await val.save();
-
-    return res.status(400).json({
-      ok: true,
-      minValue: val,
-    });
-  },
+  
   value: async (req, res = response) => {
     const val = new value(req.body);
+    console.log(val);
     let count = await getID(value);
     val.id = count;
     await val.save();
@@ -225,13 +169,13 @@ const ContractsController = {
     });
   },
   contractCreate: async (req, res = response) => {
-    console.log(req.body);
-    const contract = new contracts(req.body);
-    let count = await getID(contracts, true);
+    //console.log(req.body);
+    const contract = new contratos(req.body);
+    let count = await getID(contratos, true);
     contract.id =  `${count}--contract`;
     contract.awardID =  `${count}--adward`;
-    //console.log(contract.id);
-    //
+    console.log(contract.id);
+    
     await contract.save();
     return res.status(400).json({
       ok: true,
@@ -241,22 +185,29 @@ const ContractsController = {
   contractShow: async (req, res = response) => {
     const id = req.params.id;
     console.log(id);
-    const tender = await tenders
+    const contract = await contracts
       .findOne({"id" : id})
-      .populate("minValue", "-__v")
       .populate("value", "-__v")
-      .populate("procuringEntity", "name")
-      .populate("tenderPeriod", "-__v")
-      .populate("awardPeriod", "-__v")
-      .populate("enquiryPeriod", "-__v");
-    if (!tender) {
+
+    if (!contract) {
       return res.status(404).json({
         ok: false,
         msg: "No hay registro hecho",
       });
     }
     res.status(200).json({
-      tender,
+      "contract": {
+        "id":contract.awardID,
+        "awardID":contract.awardID,
+        "title":contract.title,
+        "description": contract.description,
+        "status": contract.status,
+        "period": contract.period,
+        "value": contract.value,
+        "items": contract.items,
+        "dateSigned": contract.dateSigned,
+        "documents": contract.documents
+      }
     });
   },
   contractUpdate: async (req, res = response) => {},
