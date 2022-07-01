@@ -197,7 +197,7 @@ const ContractsController = {
     }
     res.status(200).json({
       "contract": {
-        "id":contract.awardID,
+        "id":contract.id,
         "awardID":contract.awardID,
         "title":contract.title,
         "description": contract.description,
