@@ -23,7 +23,6 @@ const PartiesSchema = new Schema({
 PartiesSchema.plugin(require('mongoose-autopopulate'));
 PartiesSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
-  object.uid = _id;
   return object;
 });
 

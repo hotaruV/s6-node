@@ -5,7 +5,8 @@ const identifier = require("../models/parties/identifier");
 const address = require("../models/parties/address");
 const contactPoint = require("../models/parties/contactPoint");
 const parties = require("../models/parties/parties");
-const schemaGen = require("../helpers/id_parties")
+const schemaGen = require("../helpers/id_parties");
+const getID = require("../helpers/getId");
 
 const PartiesController = {
   identifier: async (req, res = response) => {
@@ -47,6 +48,9 @@ const PartiesController = {
     const add = new address(req.body);
     await add.save();
 
+    let count = await getID(address);  
+    add.id = count;
+
     return res.status(400).json({
       ok: true,
       address: add,
@@ -85,6 +89,9 @@ const PartiesController = {
         msg: "Necesita ser un E-mail válido",
       });
     }
+
+    let count = await getID(contactPoint);  
+    contact.id = count;
 
     await contact.save();
     return res.status(400).json({

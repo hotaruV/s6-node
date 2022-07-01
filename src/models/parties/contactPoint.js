@@ -8,11 +8,11 @@ const contactPointSchema = Schema({
     telephone: { type: String, require},
     faxNumber: { type: String, require},
     url: { type: String, require},
+    id: { type: Number}
 });
 
 contactPointSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
-  object.uid = _id;
   return object;
 });
 
