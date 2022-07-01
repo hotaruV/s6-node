@@ -8,11 +8,11 @@ const addressSchema = Schema({
     region: { type: String, require},
     postalCode: { type: String, require},
     countryName: { type: String, require},
+    id: { type: Number}
 });
 
 addressSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
-  object.uid = _id;
   return object;
 });
 
