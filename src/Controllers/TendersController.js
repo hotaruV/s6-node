@@ -10,6 +10,7 @@ const additionalClassifications = require("../models/tenders/items/additionalCla
 const classification = require("../models/tenders/items/classification");
 const tenders = require("../models/tenders/tenders");
 const valuesItm = require("../models/tenders/items/unit/values");
+const unitItm = require("../models/tenders/items/unit/unit");
 const items = require("../models/tenders/items/items");
 const getID = require("../helpers/getId");
 
@@ -228,6 +229,17 @@ const TendersController = {
   TendersItemValue: async (req, res = response) => {
     const val = new valuesItm(req.body);
     let count = await getID(valuesItm);
+    val.id = count;
+    await val.save();
+
+    return res.status(400).json({
+      ok: true,
+      value: val,
+    });
+  },
+  TendersItemUnit: async (req, res = response) => {
+    const val = new unitItm(req.body);
+    let count = await getID(unitItm);
     val.id = count;
     await val.save();
 
