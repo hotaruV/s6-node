@@ -20,7 +20,7 @@ const ItemsSchema = Schema({
     },
   ],
   quantity: { type: Number, require },
-  unit : { type: Schema.Types.ObjectId, require,ref: "award.item.unit" }
+  unit : { type: Schema.Types.ObjectId, require,ref: "award.item.unit", autopopulate: true}
 });
 ItemsSchema.plugin(require('mongoose-autopopulate'));
 ItemsSchema.method("toJSON", function () {

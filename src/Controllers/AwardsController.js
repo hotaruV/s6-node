@@ -10,6 +10,7 @@ const documents = require("../models/award/documents");
 const items = require("../models/award/items/items");
 const additionalClassifications = require("../models/award/items/additionalClassifications");
 const classification = require("../models/award/items/classification");
+const award = require("../models/award/awards");
 const getID = require("../helpers/getId");
 
 const AwardsController = {
@@ -143,6 +144,46 @@ const AwardsController = {
     return res.status(400).json({
       ok: true,
       value: val,
+    });
+  },
+  awardsCreate: async (req, res = response) => {
+    const aw = new award(req.body);
+    let count = await getID(award, true);
+    aw.id =  `${count}-award`;
+    await aw.save();
+    return res.status(400).json({
+      ok: true,
+      award: aw,
+    });
+  },
+  awardsShow: async (req, res = response) => {
+    const id = req.params.id;
+    console.log(id);
+    const aw = await award
+      .findOne({"id" : id})
+      .populate("value", "-__v")
+      .populate("suppliers", "-__v")
+      .populate("items", "-__v")
+      .populate("contractPeriod", "-__v");
+    if (!aw) {
+      return res.status(404).json({
+        ok: false,
+        msg: "No hay registro hecho",
+      });
+    }
+    res.status(200).json({
+      "award" : {
+        "id":aw.id,
+        "title":aw.title,
+        "description":aw.description,
+        "status":aw.status,
+        "date":aw.date,
+        "value":aw.value,
+        "suppliers":aw.supplier,
+        "items":aw.items,
+        "contractPeriod":aw.contractPeriod,
+        "documents":aw.documents,
+      }
     });
   },
 };
