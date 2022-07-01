@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const dbConect = async () => {
     try {
-        //await mongoose.connect(`mongodb://${process.env.USERMONGO}:${process.env.PASSWORDMONGO}@${process.env.HOSTMONGO}:27017`, {
-        await mongoose.connect(`${process.env.MONGOSERV}://${process.env.USERMONGO}:${process.env.PASSWORDMONGO}@${process.env.HOSTMONGO}`, {
+        await mongoose.connect(`mongodb://${process.env.USERMONGO}:${process.env.PASSWORDMONGO}@${process.env.HOSTMONGO}`, {
+        // await mongoose.connect(`${process.env.MONGOSERV}://${process.env.USERMONGO}:${process.env.PASSWORDMONGO}@${process.env.HOSTMONGO}`, {
             dbName: process.env.DATABASE,
             useNewUrlParser: true,
             useUnifiedTopology: true,

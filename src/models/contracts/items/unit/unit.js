@@ -2,15 +2,15 @@ const { Schema, Model, model } = require("mongoose");
 const moment = require("moment");
 let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
 
-const valueSchema = Schema({
+const unitSchema = Schema({
   id: { type: String, require },
-  amount: { type: Number, require },
-  currency: { type: String, require },
+  name: { type: String, require },
+  values: { type: Schema.Types.ObjectId, require,ref: "contract.item.unit.value"}
 });
 
-valueSchema.method("toJSON", function () {
+unitSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   return object;
 });
 
-module.exports = model("contract.value", valueSchema);
+module.exports = model("contract.item.unit", unitSchema);

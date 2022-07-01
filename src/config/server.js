@@ -21,6 +21,7 @@ app.use("/api/index", require("../routes/index.routes"));
 app.use("/api/seaslp/users", require("../routes/usuarios.routes"));
 app.use("/api/seaslp/login", require("../routes/login.routes"));
 app.use("/api/seaslp/tenders", require("../routes/tenders.routes"));
+app.use("/api/seaslp/contracts", require("../routes/contracts.routes"));
 app.use("/api/seaslp/parties", require("../routes/parties.routes"));
 app.use("/api/seaslp/buyers", require("../routes/buyers.routes"));
 app.use("/api/seaslp/relases", require("../routes/releases.routes"));
