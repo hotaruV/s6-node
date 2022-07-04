@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
 
 const JWTgenerate = (uid) => {
     return new Promise((resolve, reject) => {

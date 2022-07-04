@@ -1,10 +1,7 @@
-const { Router } = require('express');
-const { validarJWT } = require('../middlewares/validar-jwt');
-const BuyersController = require('../Controllers/BuyersController');
-const E_fileUpload = require('express-fileupload');
+import Router from "express";
+import { validarJWT } from "../middlewares/validar-jwt";
+import BuyersController from "../Controllers/BuyersController";
+
 const route = Router();
-route.use(E_fileUpload())
-
 route.post("/", [validarJWT], BuyersController.buyer);
-
 module.exports = route;

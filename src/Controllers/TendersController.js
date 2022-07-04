@@ -1,5 +1,5 @@
-import { response } from "express";
-import { TendersDocuments } from "../models/tenders/documents";
+import response from "express";
+import TendersDocuments from "../models/tenders/documents";
 import procuringEntity from "../models/tenders/procuringEntity";
 import tenderPeriod from "../models/tenders/tenderPeriod";
 import awardPeriod from "../models/tenders/awardPeriod";

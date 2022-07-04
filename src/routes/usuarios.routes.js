@@ -1,9 +1,9 @@
-const usuarioController = require("../Controllers/usuarioController");
-const { Router } = require("express");
-const { check } = require("express-validator");
-const { validarcampos } = require("../middlewares/validar-campos");
-const { validarJWT } = require("../middlewares/validar-jwt");
-const { isAdminRole } = require("../middlewares/validar-roles");
+import usuarioController from "../controllers/usuarioController.js";
+import { Router } from "express";
+import { check } from "express-validator";
+import { validarcampos } from "../middlewares/validar-campos";
+import { validarJWT } from "../middlewares/validar-jwt";
+import { isAdminRole } from "../middlewares/validar-roles";
 
 const route = Router();
 
@@ -33,10 +33,14 @@ route.put(
   usuarioController.updateUser
 );
 
-route.get("/buscar-uno/:id", [validarJWT],usuarioController.getOneUser );
+route.get("/buscar-uno/:id", [validarJWT], usuarioController.getOneUser);
 route.put("/:id", validarJWT, usuarioController.updateUser);
 route.post("/create_admin_sea", usuarioController.createAdminUser);
-route.put("/reset_password/:id", [validarJWT], usuarioController.resetPasswordUser);
+route.put(
+  "/reset_password/:id",
+  [validarJWT],
+  usuarioController.resetPasswordUser
+);
 //route.delete("/:id", validarJWT, usuarioController.deleteUser);
 
 module.exports = route;
