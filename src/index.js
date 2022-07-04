@@ -1,3 +1,3 @@
-const app = require('./config/server')
+import app from './config/server'
 
 require('dotenv').config()

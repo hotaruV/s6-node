@@ -1,18 +1,18 @@
-const { response } = require("express");
-const TendersDocuments = require("../models/tenders/documents");
-const procuringEntity = require("../models/tenders/procuringEntity");
-const tenderPeriod = require("../models/tenders/tenderPeriod");
-const awardPeriod = require("../models/tenders/awardPeriod");
-const enquiryPeriod = require("../models/tenders/enquiryPeriod");
-const value = require("../models/tenders/value");
-const minValue = require("../models/tenders/minValue");
-const additionalClassifications = require("../models/tenders/items/additionalClassifications");
-const classification = require("../models/tenders/items/classification");
-const tenders = require("../models/tenders/tenders");
-const valuesItm = require("../models/tenders/items/unit/values");
-const unitItm = require("../models/tenders/items/unit/unit");
-const items = require("../models/tenders/items/items");
-const getID = require("../helpers/getId");
+import { response } from "express";
+import { TendersDocuments } from "../models/tenders/documents";
+import procuringEntity from "../models/tenders/procuringEntity";
+import tenderPeriod from "../models/tenders/tenderPeriod";
+import awardPeriod from "../models/tenders/awardPeriod";
+import enquiryPeriod from "../models/tenders/enquiryPeriod";
+import value from "../models/tenders/value";
+import minValue from "../models/tenders/minValue";
+import additionalClassifications from "../models/tenders/items/additionalClassifications";
+import classification from "../models/tenders/items/classification";
+import tenders from "../models/tenders/tenders";
+import valuesItm from "../models/tenders/items/unit/values";
+import unitItm from "../models/tenders/items/unit/unit";
+import items from "../models/tenders/items/items";
+import getID from "../helpers/getId";
 
 const TendersController = {
   documents: async (req, res = response) => {
@@ -66,7 +66,7 @@ const TendersController = {
       date.getFullYear();
 
     const Docs = new TendersDocuments(req.body);
-    
+
     function isUrl(s) {
       var regexp =
         /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -258,7 +258,7 @@ const TendersController = {
   tendersCreate: async (req, res = response) => {
     const tender = new tenders(req.body);
     let count = await getID(tenders, true);
-    tender.id =  `${count}-tender`;
+    tender.id = `${count}-tender`;
     console.log(tender.id);
     await tender.save();
     return res.status(400).json({
@@ -270,7 +270,7 @@ const TendersController = {
     const id = req.params.id;
     console.log(id);
     const tender = await tenders
-      .findOne({"id" : id})
+      .findOne({ id: id })
       .populate("minValue", "-__v")
       .populate("value", "-__v")
       .populate("procuringEntity", "name")
@@ -284,26 +284,26 @@ const TendersController = {
       });
     }
     res.status(200).json({
-      "tender": {
-        "id":tender.id,
-        "title":tender.title,
-        "description":tender.description,
-        "status":tender.status,
-        "items":tender.items,
-        "minValue":tender.minValue,
-        "value":tender.value,
-        "procurementMethod":tender.procurementMethod,
-        "procurementMethodRationale":tender.procurementMethodRationale,
-        "awardCriteria":tender.awardCriteria,
-        "awardCriteriaDetails":tender.awardCriteriaDetails,
-        "submissionMethodDetails":tender.submissionMethodDetails,
-        "enquiryPeriod":tender.enquiryPeriod,
-        "hasEnquiries":tender.hasEnquiries,
-        "tenderPeriod":tender.tenderPeriod,
-        "awardPeriod":tender.awardPeriod,
-        "procuringEntity":tender.procuringEntity,
-        "documents":tender.documents
-      }
+      tender: {
+        id: tender.id,
+        title: tender.title,
+        description: tender.description,
+        status: tender.status,
+        items: tender.items,
+        minValue: tender.minValue,
+        value: tender.value,
+        procurementMethod: tender.procurementMethod,
+        procurementMethodRationale: tender.procurementMethodRationale,
+        awardCriteria: tender.awardCriteria,
+        awardCriteriaDetails: tender.awardCriteriaDetails,
+        submissionMethodDetails: tender.submissionMethodDetails,
+        enquiryPeriod: tender.enquiryPeriod,
+        hasEnquiries: tender.hasEnquiries,
+        tenderPeriod: tender.tenderPeriod,
+        awardPeriod: tender.awardPeriod,
+        procuringEntity: tender.procuringEntity,
+        documents: tender.documents,
+      },
     });
   },
   tenderButton: () => {

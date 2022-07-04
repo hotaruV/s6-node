@@ -1,6 +1,6 @@
-const { Router } = require("express");
-const path = require("path");
-const fs = require("fs");
+import { Router } from "express";
+import { resolve } from "path";
+import { readFileSync } from "fs";
 const route = Router();
 
 route.get("/", (req, res) => {
@@ -11,9 +11,9 @@ route.get("/", (req, res) => {
 });
 
 route.get("/list-slp", (req, res) => {
-  const ruta = path.resolve(__dirname, "../documents/municipios.json");
+  const ruta = resolve(__dirname, "../documents/municipios.json");
   console.log(ruta);
-  const fileContents = fs.readFileSync(ruta, "utf8");
+  const fileContents = readFileSync(ruta, "utf8");
 
   try {
     const data = JSON.parse(fileContents);
@@ -31,4 +31,4 @@ route.post("/crear", (req, res) => {
   });
 });
 
-module.exports = route;
+export default route;
