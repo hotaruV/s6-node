@@ -122,7 +122,14 @@ const PartiesController = {
       });
     }
     res.status(200).json({
-        partie,
+        "paties":{
+          "identifier":partie.identifier,
+          "name":partie.name,
+          "address":partie.address,
+          "contactPoint":partie.contactPoint,
+          "roles":partie.roles, 
+          "id":partie.id
+        }
     });
   },
   partiesButton: () => {
