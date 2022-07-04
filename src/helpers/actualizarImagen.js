@@ -14,6 +14,21 @@ const borrarImagen = async(modelo, nameFile, tipo) => {
     return true;
 }
 
+
+  // itemsShow: async (req, res = response) => {
+  //   const id = req.params.id;
+  //   let ID = getID(items, id);
+  //   if (!items) {
+  //     return res.status(404).json({
+  //       ok: false,
+  //       msg: "No existe usuario",
+  //     });
+  //   }
+  //   res.status(200).json({
+  //     items,
+  //   });
+  // },
+  
 const actualizarImagen = async(tipo, id, nameFile) => {
     switch (tipo) {
 

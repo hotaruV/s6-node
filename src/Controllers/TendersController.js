@@ -213,19 +213,6 @@ const TendersController = {
       item,
     });
   },
-  // itemsShow: async (req, res = response) => {
-  //   const id = req.params.id;
-  //   let ID = getID(items, id);
-  //   if (!items) {
-  //     return res.status(404).json({
-  //       ok: false,
-  //       msg: "No existe usuario",
-  //     });
-  //   }
-  //   res.status(200).json({
-  //     items,
-  //   });
-  // },
   TendersItemValue: async (req, res = response) => {
     const val = new valuesItm(req.body);
     let count = await getID(valuesItm);
