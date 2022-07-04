@@ -7,6 +7,7 @@ const contactPoint = require("../models/parties/contactPoint");
 const parties = require("../models/parties/parties");
 const schemaGen = require("../helpers/id_parties");
 const getID = require("../helpers/getId");
+const { relativeTimeThreshold } = require("moment");
 
 const PartiesController = {
   identifier: async (req, res = response) => {
@@ -123,7 +124,13 @@ const PartiesController = {
     res.status(200).json({
         partie,
     });
-  }
+  },
+  partiesButton: () => {
+    this.identifier();
+    this.address();
+    this.contactPoint();
+    this.partiesCreate();
+  },
 };
 
 module.exports = PartiesController;

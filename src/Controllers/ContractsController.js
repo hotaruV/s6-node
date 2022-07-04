@@ -90,7 +90,6 @@ const ContractsController = {
       msg: "Documento subido de manera exitosa",
     });
   },
-  
   ContractPeriod: async (req, res = response) => {
     let fecha_fin = new Date(req.body.endDate).getTime();
     let fecha_inicio = new Date(req.body.startDate).getTime();
@@ -115,7 +114,6 @@ const ContractsController = {
       period: Period,
     });
   },
-  
   value: async (req, res = response) => {
     const val = new value(req.body);
     console.log(val);
@@ -209,6 +207,16 @@ const ContractsController = {
         "documents": contract.documents
       }
     });
+  },
+  contractButton: () => {
+    this.documents();
+    this.ContractPeriod();
+    this.value();
+    this.items();
+    this.TendersItemValue();
+    this.classifications();
+    this.additionalClassifications();
+    this.contractCreate();
   },
   contractUpdate: async (req, res = response) => {},
 };

@@ -14,7 +14,7 @@ const LicitacionController = {
       lic,
     });
   },
-
+    
   licitacionShow: async (req, res = response) => {
     const id = req.params.id;
     let ID = getID(licitacion);

@@ -186,6 +186,18 @@ const AwardsController = {
       }
     });
   },
+  awardButton: () => {
+    this.contractPeriod();
+    this.suppliers();
+    this.value();
+    this.documents();
+    this.items();
+    this.classifications();
+    this.additionalClassifications();
+    this.itemValue();
+    this.itemUnit();
+    this.awardsCreate();
+  },
 };
 
 module.exports = AwardsController;

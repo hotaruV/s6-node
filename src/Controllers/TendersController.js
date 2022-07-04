@@ -284,8 +284,42 @@ const TendersController = {
       });
     }
     res.status(200).json({
-      tender,
+      "tender": {
+        "id":tender.id,
+        "title":tender.title,
+        "description":tender.description,
+        "status":tender.status,
+        "items":tender.items,
+        "minValue":tender.minValue,
+        "value":tender.value,
+        "procurementMethod":tender.procurementMethod,
+        "procurementMethodRationale":tender.procurementMethodRationale,
+        "awardCriteria":tender.awardCriteria,
+        "awardCriteriaDetails":tender.awardCriteriaDetails,
+        "submissionMethodDetails":tender.submissionMethodDetails,
+        "enquiryPeriod":tender.enquiryPeriod,
+        "hasEnquiries":tender.hasEnquiries,
+        "tenderPeriod":tender.tenderPeriod,
+        "awardPeriod":tender.awardPeriod,
+        "procuringEntity":tender.procuringEntity,
+        "documents":tender.documents
+      }
     });
+  },
+  tenderButton: () => {
+    this.documents();
+    this.procuringEntity();
+    this.tenderPeriod();
+    this.awardPeriod();
+    this.enquiryPeriod();
+    this.minValue();
+    this.value();
+    this.items();
+    this.TendersItemValue();
+    this.TendersItemUnit();
+    this.classifications();
+    this.additionalClassifications();
+    this.tendersCreate();
   },
   tendersUpdate: async (req, res = response) => {},
 };

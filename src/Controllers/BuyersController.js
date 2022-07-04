@@ -3,7 +3,7 @@ const { JWTgenerate } = require("../helpers/jwt");
 const { v4: uuidv4 } = require("uuid");
 const buyers = require("../models/buyer/buyer");
 
-const PartiesController = {
+const BuyersController = {
     buyer: async (req, res = response) => {
     const buyer = new buyers(req.body);
     await buyer.save();
@@ -14,4 +14,4 @@ const PartiesController = {
   },
 };
 
-module.exports = PartiesController;
+module.exports = BuyersController;
