@@ -1,23 +1,26 @@
-const express = require("express");
+"use strict";
+
+import express, { json } from "express";
 const app = express();
-const cors = require("cors");
-const { dbConect } = require("../config/database");
-var bodyParser = require('body-parser')
+var path = require("path");
+import cors from "cors";
+import { dbConect } from "../config/database";
+import { json as _json } from "body-parser";
 
 app.set("port", process.env.PORT || 3000);
 app.listen(app.get("port"), () => {
   console.log("Escuchando puerto", app.get("port"));
   dbConect();
 });
-app.use(express.json());
-app.use(bodyParser.json())
+app.use(json());
+app.use(_json());
 app.use(cors());
 
 //directorio publico
-app.use(express.static("./src/public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 //archivos de rutas
-app.use("/api/index", require("../routes/index.routes"));
+app.use("/api/index", require("../routes/index.routes").default);
 app.use("/api/seaslp/users", require("../routes/usuarios.routes"));
 app.use("/api/seaslp/login", require("../routes/login.routes"));
 app.use("/api/seaslp/tenders", require("../routes/tenders.routes"));
@@ -28,4 +31,4 @@ app.use("/api/seaslp/relases", require("../routes/releases.routes"));
 app.use("/api/seaslp/awards", require("../routes/awards.routes"));
 
 // app.use('/api/upload', require('../routes/uploadsFiles.routes'));
-module.exports = app;
+export default app;
