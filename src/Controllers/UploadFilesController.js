@@ -1,10 +1,8 @@
-const { response } = require('express');
-const { v4: uuidv4 } = require('uuid');
-const { actualizarImagen } = require('../helpers/actualizarImagen');
-const path = require('path')
-const fs = require('fs');
-
-
+import response from "express";
+import { uuidv4} from ('uuid');
+import { actualizarImagen } from '../helpers/actualizarImagen';
+import path from 'path';
+import fs from 'fs';
 
 const UploadController = {
     fileUpload: async(req, res = response) => {

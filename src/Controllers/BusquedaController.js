@@ -1,7 +1,7 @@
-const { response } = require('express')
-const Usuario = require('../models/usuario');
-const Hospital = require('../models/hospital');
-const Medico = require('../models/medicos');
+import response from 'express';
+import Usuario from '../models/usuario';
+import Hospital from '../models/hospital';
+import Medico from '../models/medicos';
 
 
 const BusquedaController = {

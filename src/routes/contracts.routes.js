@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const { validarJWT } = require('../middlewares/validar-jwt');
-const ContractsController = require('../Controllers/ContractsController');
-const E_fileUpload = require('express-fileupload');
+import Router from 'express';
+import { validarJWT } from '../middlewares/validar-jwt';
+import E_fileUpload from 'express-fileupload';
+import ContractsController from '../Controllers/ContractsController';
 const route = Router();
 route.use(E_fileUpload())
 

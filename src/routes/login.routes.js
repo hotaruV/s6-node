@@ -1,8 +1,8 @@
-const { Router } = require('express');
-const loginController = require('../Controllers/loginController');
-const { validarcampos } = require('../middlewares/validar-campos');
-const { check } = require('express-validator');
-const { validarJWT } = require('../middlewares/validar-jwt');
+import Router from 'express';
+import { validarJWT } from '../middlewares/validar-jwt';
+import loginController from '../Controllers/loginController';
+import { validarcampos } from'../middlewares/validar-campos';
+import { check } from'express-validator';
 const route = Router();
 
 

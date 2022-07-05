@@ -1,9 +1,9 @@
-const { Router } = require('express');
-const { validarJWT } = require('../middlewares/validar-jwt');
-const TendersController = require('../Controllers/TendersController');
-const E_fileUpload = require('express-fileupload');
+import Router from 'express';
+import { validarJWT } from '../middlewares/validar-jwt';
+import TendersController from '../Controllers/TendersController';
+import E_fileUpload from 'express-fileupload';
 const route = Router();
-route.use(E_fileUpload())
+route.use(E_fileUpload());
 
 route.post("/documents", [validarJWT], TendersController.documents);
 route.post("/procuringEntity", [validarJWT], TendersController.procuringEntity);
