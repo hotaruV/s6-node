@@ -15,8 +15,10 @@ route.post("/register", [
     validarcampos,
     validarJWT,
     isAdminRole ],
-  usuarioController.createUsers
-);
+    usuarioController.createUsers
+    );
+    
+route.get("/id", [validarJWT], usuarioController.getDataUser);
 
 route.put("/buscar/:id",
   [
@@ -30,8 +32,10 @@ route.put("/buscar/:id",
 );
 
 route.get("/buscar-uno/:id", [validarJWT], usuarioController.getOneUser);
+
+
 route.put("/:id", validarJWT, usuarioController.updateUser);
-route.post("/create_admin_sea", usuarioController.createAdminUser);
+route.post("/create_admin_sea", usuarioController.getDataUser);
 route.put(
   "/reset_password/:id",
   [validarJWT],

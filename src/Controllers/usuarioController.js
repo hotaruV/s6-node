@@ -24,6 +24,29 @@ const usrController = {
       total,
     });
   },
+  getDataUser: async(req, res)=> {
+    try {
+      const uid = req.uid;
+      //console.log(req.uid);
+      const usuarioDB = await Usuario.findOne({"_id" :uid});
+      if (!usuarioDB) {
+        return res.status(404).json({
+          ok: false,
+          msg: "No existe usuario",
+        });
+      } else {
+        return res.status(404).json({
+          ok: true,
+          user: usuarioDB,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        ok: false,
+        msg: "Error Inesperado-... usuario no existe",
+      });
+    }
+  },
   createUsers: async (req, res = response) => {
     try {
       //console.log(req.body.rfc);
