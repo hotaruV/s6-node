@@ -1,9 +1,9 @@
-const { response } = require("express");
-const Usuario = require("../models/usuario");
-const bcrypt = require("bcryptjs");
-const usuario = require("../models/usuario");
-const { JWTgenerate } = require("../helpers/jwt");
-const getID = require("../helpers/getId");
+import response from "express";
+import Usuario from "../models/usuario";
+import bcrypt from "bcryptjs";
+import usuario from "../models/usuario";
+import { JWTgenerate } from "../helpers/jwt";
+import getID from "../helpers/getId";
 
 const usrController = {
   getUser: async (req, res) => {

@@ -1,4 +1,4 @@
-import usuarioController from "../controllers/usuarioController.js";
+import usuarioController from "../Controllers/usuarioController.js";
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarcampos } from "../middlewares/validar-campos";

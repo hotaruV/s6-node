@@ -1,8 +1,7 @@
-const { response } = require("express");
-const { JWTgenerate } = require("../helpers/jwt");
-const Usuario = require("../models/usuario");
-const bcrypt = require("bcryptjs");
-const usuario = require("../models/usuario");
+import response from "express";
+import { JWTgenerate } from "../helpers/jwt";
+import Usuario from "../models/usuario";
+import bcrypt from "bcryptjs";
 
 const loginController = {
   login: async (req, res = response) => {
