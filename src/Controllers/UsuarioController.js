@@ -1,9 +1,7 @@
 import response from "express";
 import Usuario from "../models/usuario";
 import bcrypt from "bcryptjs";
-import usuario from "../models/usuario";
 import { JWTgenerate } from "../helpers/jwt";
-import getID from "../helpers/getId";
 
 const usrController = {
   getUser: async (req, res) => {
@@ -25,6 +23,29 @@ const usrController = {
       usuarios,
       total,
     });
+  },
+  getDataUser: async(req, res)=> {
+    try {
+      const uid = req.uid;
+      //console.log(req.uid);
+      const usuarioDB = await Usuario.findOne({"_id" :uid});
+      if (!usuarioDB) {
+        return res.status(404).json({
+          ok: false,
+          msg: "No existe usuario",
+        });
+      } else {
+        return res.status(404).json({
+          ok: true,
+          user: usuarioDB,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        ok: false,
+        msg: "Error Inesperado-... usuario no existe",
+      });
+    }
   },
   createUsers: async (req, res = response) => {
     try {
@@ -60,7 +81,6 @@ const usrController = {
   getOneUser: async (req, res) => {
     try {
       const uid = req.params.id;
-      let ID = getID(usuario, true);
       const usuarioDB = await usuario.findById(uid);
       if (!usuarioDB) {
         return res.status(404).json({
@@ -209,7 +229,7 @@ const usrController = {
     }
 
     //const rfc = us;
-  },
+  }
 };
 
 module.exports = usrController;

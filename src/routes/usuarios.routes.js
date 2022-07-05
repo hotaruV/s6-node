@@ -8,21 +8,19 @@ import { isAdminRole } from "../middlewares/validar-roles";
 const route = Router();
 
 route.get("/user_all", validarJWT, usuarioController.getUser);
-route.post(
-  "/register",
-  [
+route.post("/register", [
     check("nombres", "El Campo Nombre(s) es Obligatorio").not().isEmpty(),
     check("email", "El email es Obligatorio").isEmail(),
     check("rfc", "El Campo RFC es Obligatorio").not().isEmpty(),
     validarcampos,
     validarJWT,
-    isAdminRole,
-  ],
-  usuarioController.createUsers
-);
+    isAdminRole ],
+    usuarioController.createUsers
+    );
+    
+route.get("/id", [validarJWT], usuarioController.getDataUser);
 
-route.put(
-  "/buscar/:id",
+route.put("/buscar/:id",
   [
     validarJWT,
     check("nombres", "El Campo Nombre(s) es Obligatorio").not().isEmpty(),
@@ -34,8 +32,10 @@ route.put(
 );
 
 route.get("/buscar-uno/:id", [validarJWT], usuarioController.getOneUser);
+
+
 route.put("/:id", validarJWT, usuarioController.updateUser);
-route.post("/create_admin_sea", usuarioController.createAdminUser);
+route.post("/create_admin_sea", usuarioController.getDataUser);
 route.put(
   "/reset_password/:id",
   [validarJWT],
