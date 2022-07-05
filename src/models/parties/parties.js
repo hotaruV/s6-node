@@ -9,6 +9,7 @@ const PartyRoles = {
 }
 
 const PartiesSchema = new Schema({
+    
     identifier: { type: Schema.Types.ObjectId, require, ref: 'parties.identifier' ,autopopulate: true },
     name: { type: String, require },
     address: { type: Schema.Types.ObjectId, require, ref: 'parties.address' ,autopopulate: true},
