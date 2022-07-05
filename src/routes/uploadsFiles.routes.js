@@ -5,7 +5,7 @@ import UploadController from '../Controllers/UploadFilesController';
 import E_fileUpload from 'express-fileupload';
 const rout = Router();
 
-rout.use(E_fileUpload())
+rout.use(E_fileUpload());
 
 
 rout.put('/:tipo/:id', validarJWT, UploadController.fileUpload)
