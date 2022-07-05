@@ -1,13 +1,11 @@
-const { response } = require("express");
-const { JWTgenerate } = require("../helpers/jwt");
-const { v4: uuidv4 } = require("uuid");
-const identifier = require("../models/parties/identifier");
-const address = require("../models/parties/address");
-const contactPoint = require("../models/parties/contactPoint");
-const parties = require("../models/parties/parties");
-const schemaGen = require("../helpers/id_parties");
-const getID = require("../helpers/getId");
-const { relativeTimeThreshold } = require("moment");
+import { response } from "express";
+import identifier from "../models/parties/identifier";
+import address from "../models/parties/address";
+import contactPoint from "../models/parties/contactPoint";
+import parties from "../models/parties/parties";
+import schemaGen from "../helpers/id_parties";
+import getID from "../helpers/getId";
+
 
 const PartiesController = {
   identifier: async (req, res = response) => {

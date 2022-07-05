@@ -1,22 +1,20 @@
-const { response } = require("express");
-const { JWTgenerate } = require("../helpers/jwt");
-const { v4: uuidv4 } = require("uuid");
-const contractPeriod = require("../models/award/contractPeriod");
-const suppliers = require("../models/award/suppliers");
-const value = require("../models/award/value");
-const valuesItm = require("../models/award/items/unit/values");
-const unitItm = require("../models/award/items/unit/unit");
-const documents = require("../models/award/documents");
-const items = require("../models/award/items/items");
-const additionalClassifications = require("../models/award/items/additionalClassifications");
-const classification = require("../models/award/items/classification");
-const award = require("../models/award/awards");
-const getID = require("../helpers/getId");
+import { response } from "express";
+import { contractPeriod } from "../models/award/contractPeriod";
+import { suppliers } from "../models/award/suppliers";
+import { value } from "../models/award/suppliers";
+import { valuesItm } from "../models/award/items/unit/values";
+import { unitItm } from "../models/award/items/unit/unit";
+import { documents } from "../models/award/documents";
+import { items } from "../models/award/items/items";
+import { additionalClassifications } from "../models/award/items/additionalClassifications";
+import { classification } from "../models/award/items/classification";
+import { award } from "../models/award/awards";
+import { getID } from "../helpers/getId";
 
 const AwardsController = {
   contractPeriod: async (req, res = response) => {
     const contract = new contractPeriod(req.body);
-    let count = await getID(contractPeriod);  
+    let count = await getID(contractPeriod);
     contract.id = count;
 
     let fecha_fin = new Date(req.body.endDate).getTime();
@@ -45,7 +43,7 @@ const AwardsController = {
   },
   value: async (req, res = response) => {
     const val = new value(req.body);
-    let count = await getID(value);  
+    let count = await getID(value);
     val.id = count;
     await val.save();
     return res.status(400).json({
@@ -65,7 +63,7 @@ const AwardsController = {
       date.getFullYear();
 
     const Docs = new documents(req.body);
-    
+
     function isUrl(s) {
       var regexp =
         /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -149,7 +147,7 @@ const AwardsController = {
   awardsCreate: async (req, res = response) => {
     const aw = new award(req.body);
     let count = await getID(award, true);
-    aw.id =  `${count}-award`;
+    aw.id = `${count}-award`;
     await aw.save();
     return res.status(400).json({
       ok: true,
@@ -160,7 +158,7 @@ const AwardsController = {
     const id = req.params.id;
     console.log(id);
     const aw = await award
-      .findOne({"id" : id})
+      .findOne({ id: id })
       .populate("value", "-__v")
       .populate("suppliers", "-__v")
       .populate("items", "-__v")
@@ -172,18 +170,18 @@ const AwardsController = {
       });
     }
     res.status(200).json({
-      "award" : {
-        "id":aw.id,
-        "title":aw.title,
-        "description":aw.description,
-        "status":aw.status,
-        "date":aw.date,
-        "value":aw.value,
-        "suppliers":aw.supplier,
-        "items":aw.items,
-        "contractPeriod":aw.contractPeriod,
-        "documents":aw.documents,
-      }
+      award: {
+        id: aw.id,
+        title: aw.title,
+        description: aw.description,
+        status: aw.status,
+        date: aw.date,
+        value: aw.value,
+        suppliers: aw.supplier,
+        items: aw.items,
+        contractPeriod: aw.contractPeriod,
+        documents: aw.documents,
+      },
     });
   },
   awardButton: () => {

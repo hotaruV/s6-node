@@ -2,7 +2,6 @@ const { response } = require("express");
 const { JWTgenerate } = require("../helpers/jwt");
 const Usuario = require("../models/usuario");
 const bcrypt = require("bcryptjs");
-const usuario = require("../models/usuario");
 
 const loginController = {
   login: async (req, res = response) => {

@@ -1,7 +1,5 @@
-const { response } = require("express");
-const { JWTgenerate } = require("../helpers/jwt");
-const { v4: uuidv4 } = require("uuid");
-const buyers = require("../models/buyer/buyer");
+import { response } from "express";
+import buyers from "../models/buyer/buyer";
 
 const BuyersController = {
     buyer: async (req, res = response) => {
@@ -14,4 +12,4 @@ const BuyersController = {
   },
 };
 
-module.exports = BuyersController;
+export default BuyersController;

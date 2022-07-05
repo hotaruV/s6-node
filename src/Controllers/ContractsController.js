@@ -1,12 +1,12 @@
-const { response } = require("express");
-const getID = require("../helpers/getId");
-const contratos = require("../models/contracts/contracts");
-const ContractPeriod = require("../models/contracts/contractPeriod");
-const items = require("../models/contracts/items/items");
-const value = require("../models/contracts/value");
-const additionalClassifications = require("../models/contracts/items/additionalClassifications");
-const classification = require("../models/contracts/items/classification");
-const contracts = require("../models/contracts/contracts");
+import { response } from "express";
+import getID from "../helpers/getId";
+import contratos from "../models/contracts/contracts";
+import ContractPeriod from "../models/contracts/contractPeriod";
+import items from "../models/contracts/items/items";
+import value from "../models/contracts/value";
+import additionalClassifications from "../models/contracts/items/additionalClassifications";
+import classification from "../models/contracts/items/classification";
+import contracts from "../models/contracts/contracts";
 
 const ContractsController = {
   documents: async (req, res = response) => {
@@ -60,7 +60,7 @@ const ContractsController = {
       date.getFullYear();
 
     const Docs = new TendersDocuments(req.body);
-    
+
     function isUrl(s) {
       var regexp =
         /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -170,10 +170,10 @@ const ContractsController = {
     //console.log(req.body);
     const contract = new contratos(req.body);
     let count = await getID(contratos, true);
-    contract.id =  `${count}--contract`;
-    contract.awardID =  `${count}--adward`;
+    contract.id = `${count}--contract`;
+    contract.awardID = `${count}--adward`;
     console.log(contract.id);
-    
+
     await contract.save();
     return res.status(400).json({
       ok: true,
@@ -184,8 +184,8 @@ const ContractsController = {
     const id = req.params.id;
     console.log(id);
     const contract = await contracts
-      .findOne({"id" : id})
-      .populate("value", "-__v")
+      .findOne({ id: id })
+      .populate("value", "-__v");
 
     if (!contract) {
       return res.status(404).json({
@@ -194,18 +194,18 @@ const ContractsController = {
       });
     }
     res.status(200).json({
-      "contract": {
-        "id":contract.id,
-        "awardID":contract.awardID,
-        "title":contract.title,
-        "description": contract.description,
-        "status": contract.status,
-        "period": contract.period,
-        "value": contract.value,
-        "items": contract.items,
-        "dateSigned": contract.dateSigned,
-        "documents": contract.documents
-      }
+      contract: {
+        id: contract.id,
+        awardID: contract.awardID,
+        title: contract.title,
+        description: contract.description,
+        status: contract.status,
+        period: contract.period,
+        value: contract.value,
+        items: contract.items,
+        dateSigned: contract.dateSigned,
+        documents: contract.documents,
+      },
     });
   },
   contractButton: () => {

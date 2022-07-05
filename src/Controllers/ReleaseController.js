@@ -1,9 +1,6 @@
-const { response } = require("express");
-const { JWTgenerate } = require("../helpers/jwt");
-const { v4: uuidv4 } = require("uuid");
-const licitacion = require("../models/licitacion");
-const { populate } = require("../models/usuario");
-const getID = require("../helpers/getId");
+import { response } from "express";
+import {licitacion} from "../models/licitacion";
+import {getID} from "../helpers/getId";
 
 const ReleaseController = {
   licitacionCreate: async (req, res = response) => {

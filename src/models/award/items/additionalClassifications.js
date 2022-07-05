@@ -1,6 +1,6 @@
-const { Schema, Model, model } = require("mongoose");
-const moment = require("moment");
-let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
+import { Schema, Model, model } from 'mongoose';
+import moment from 'moment';
+let fecha = moment().format('YYYY-MM-DD HH:mm:ss');
 
 const additionalClassificationsSchema = Schema({
   id: { type: String, require },

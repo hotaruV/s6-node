@@ -1,5 +1,5 @@
-const { Schema, Model, model } = require('mongoose');
-const moment = require('moment');
+import { Schema, Model, model } from 'mongoose';
+import moment from 'moment';
 let fecha = moment().format('YYYY-MM-DD HH:mm:ss');
 
 const RolesValidos = {
@@ -29,4 +29,4 @@ UsuarioSchema.method('toJSON', function () {
     return object
 })
 
-module.exports = model('admin_users', UsuarioSchema)
+export default model('admin_users', UsuarioSchema)

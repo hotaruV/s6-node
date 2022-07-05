@@ -1,5 +1,5 @@
-const { response } = require("express");
-const Usuario = require("../models/usuario");
+import { response } from "express"
+import Usuario from "../models/usuario"
 
 
 const isAdminRole  = async (req, res = response, next) => {
