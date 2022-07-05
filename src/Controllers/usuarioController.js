@@ -1,9 +1,7 @@
 import response from "express";
 import Usuario from "../models/usuario";
 import bcrypt from "bcryptjs";
-import usuario from "../models/usuario";
 import { JWTgenerate } from "../helpers/jwt";
-import getID from "../helpers/getId";
 
 const usrController = {
   getUser: async (req, res) => {
@@ -60,7 +58,6 @@ const usrController = {
   getOneUser: async (req, res) => {
     try {
       const uid = req.params.id;
-      let ID = getID(usuario, true);
       const usuarioDB = await usuario.findById(uid);
       if (!usuarioDB) {
         return res.status(404).json({
@@ -209,7 +206,7 @@ const usrController = {
     }
 
     //const rfc = us;
-  },
+  }
 };
 
 module.exports = usrController;
