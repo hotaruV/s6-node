@@ -2,11 +2,7 @@ import { response } from "express";
 import getID from "../helpers/getId";
 import contratos from "../models/contracts/contracts";
 import ContractPeriod from "../models/contracts/contractPeriod";
-import items from "../models/contracts/items/items";
 import value from "../models/contracts/value";
-import additionalClassifications from "../models/contracts/items/additionalClassifications";
-import classification from "../models/contracts/items/classification";
-import contracts from "../models/contracts/contracts";
 
 const ContractsController = {
   documents: async (req, res = response) => {
@@ -116,7 +112,6 @@ const ContractsController = {
   },
   value: async (req, res = response) => {
     const val = new value(req.body);
-    console.log(val);
     let count = await getID(value);
     val.id = count;
     await val.save();
@@ -124,46 +119,6 @@ const ContractsController = {
     return res.status(400).json({
       ok: true,
       value: val,
-    });
-  },
-  items: async (req, res = response) => {
-    const item = new items(req.body);
-    let count = await getID(items);
-    item.id = count;
-    await item.save();
-    return res.status(400).json({
-      item,
-    });
-  },
-  TendersItemValue: async (req, res = response) => {
-    const val = new valuesItm(req.body);
-    let count = await getID(valuesItm);
-    val.id = count;
-    await val.save();
-
-    return res.status(400).json({
-      ok: true,
-      value: val,
-    });
-  },
-  classifications: async (req, res = response) => {
-    const classifications = new classification(req.body);
-    let count = await getID(classification);
-    classifications.id = count;
-    await classifications.save();
-    return res.status(400).json({
-      ok: true,
-      classifications,
-    });
-  },
-  additionalClassifications: async (req, res = response) => {
-    const val = new additionalClassifications(req.body);
-    let count = await getID(additionalClassifications);
-    val.id = count;
-    await val.save();
-    return res.status(400).json({
-      ok: true,
-      additionalClassifications: val,
     });
   },
   contractCreate: async (req, res = response) => {
@@ -183,7 +138,7 @@ const ContractsController = {
   contractShow: async (req, res = response) => {
     const id = req.params.id;
     console.log(id);
-    const contract = await contracts
+    const contract = await contratos
       .findOne({ id: id })
       .populate("value", "-__v");
 

@@ -2,7 +2,7 @@ import { Schema, Model, model } from 'mongoose';
 import moment from 'moment';
 let fecha = moment().format('YYYY-MM-DD HH:mm:ss');
 
-const ClassificationsSchema = Schema({
+const additionalClassificationsSchema = Schema({
   id: { type: String, require },
   scheme: { type: String, require },
   //endDate: { type: String, require },
@@ -10,12 +10,12 @@ const ClassificationsSchema = Schema({
   uri: { type: String, require },
 });
 
-ClassificationsSchema.method("toJSON", function () {
+additionalClassificationsSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   return object;
 });
 
 module.exports = model(
-  "award.item.classification",
-  ClassificationsSchema
+  "item.additionalClassifications",
+  additionalClassificationsSchema
 );

@@ -10,8 +10,8 @@ const getID = async (model, ocid = false) => {
 };
 
 const setOCID = (id) => {
-  ocid = process.env.OCID;
-  idi = zfill(id, 5);
+  let ocid = process.env.OCID;
+  let idi = zfill(id, 5);
   ocid += `000-${idi}`;
 
   //console.log(ocid);

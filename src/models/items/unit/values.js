@@ -1,7 +1,6 @@
-const { Schema, Model, model } = require("mongoose");
-const moment = require("moment");
-let fecha = moment().format("YYYY-MM-DD HH:mm:ss");
-
+import { Schema, Model, model } from 'mongoose';
+import moment from 'moment';
+let fecha = moment().format('YYYY-MM-DD HH:mm:ss');
 const ItemValueSchema = Schema({
   id: { type: String, require },
   amount: { type: Number, require },
@@ -14,6 +13,6 @@ ItemValueSchema.method("toJSON", function () {
 });
 
 module.exports = model(
-  "award.item.unit.value",
+  "item.unit.value",
   ItemValueSchema
 );

@@ -2,12 +2,7 @@ import { response } from "express";
 import { contractPeriod } from "../models/award/contractPeriod";
 import { suppliers } from "../models/award/suppliers";
 import { value } from "../models/award/suppliers";
-import { valuesItm } from "../models/award/items/unit/values";
-import { unitItm } from "../models/award/items/unit/unit";
 import { documents } from "../models/award/documents";
-import { items } from "../models/award/items/items";
-import { additionalClassifications } from "../models/award/items/additionalClassifications";
-import { classification } from "../models/award/items/classification";
 import { award } from "../models/award/awards";
 import { getID } from "../helpers/getId";
 
@@ -91,57 +86,6 @@ const AwardsController = {
       ok: true,
       documents: Docs,
       msg: "Documento subido de manera exitosa",
-    });
-  },
-  items: async (req, res = response) => {
-    const item = new items(req.body);
-    let count = await getID(items);
-    item.id = count;
-    await item.save();
-    return res.status(400).json({
-      item,
-    });
-  },
-  classifications: async (req, res = response) => {
-    const classifications = new classification(req.body);
-    let count = await getID(classification);
-    classifications.id = count;
-    await classifications.save();
-    return res.status(400).json({
-      ok: true,
-      classifications,
-    });
-  },
-  additionalClassifications: async (req, res = response) => {
-    const val = new additionalClassifications(req.body);
-    let count = await getID(additionalClassifications);
-    val.id = count;
-    await val.save();
-    return res.status(400).json({
-      ok: true,
-      additionalClassifications: val,
-    });
-  },
-  itemValue: async (req, res = response) => {
-    const val = new valuesItm(req.body);
-    let count = await getID(valuesItm);
-    val.id = count;
-    await val.save();
-
-    return res.status(400).json({
-      ok: true,
-      value: val,
-    });
-  },
-  itemUnit: async (req, res = response) => {
-    const val = new unitItm(req.body);
-    let count = await getID(unitItm);
-    val.id = count;
-    await val.save();
-
-    return res.status(400).json({
-      ok: true,
-      value: val,
     });
   },
   awardsCreate: async (req, res = response) => {

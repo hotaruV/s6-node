@@ -8,19 +8,19 @@ const ItemsSchema = Schema({
   classification: {
     type: Schema.Types.ObjectId,
     require,
-    ref: "contract.item.classification",
+    ref: "item.classification",
     autopopulate: true
   },
   additionalClassifications: [
     {
       type: Schema.Types.ObjectId,
       require,
-      ref: "contract.item.additionalClassifications",
+      ref: "item.additionalClassifications",
       autopopulate: true
     },
   ],
   quantity: { type: Number, require },
-  unit : { type: Schema.Types.ObjectId, require,ref: "contract.item.unit" }
+  unit : { type: Schema.Types.ObjectId, require,ref: "item.unit", autopopulate: true}
 });
 ItemsSchema.plugin(require('mongoose-autopopulate'));
 ItemsSchema.method("toJSON", function () {
@@ -28,4 +28,4 @@ ItemsSchema.method("toJSON", function () {
   return object;
 });
 
-module.exports = model("contract.items", ItemsSchema);
+module.exports = model("items", ItemsSchema);

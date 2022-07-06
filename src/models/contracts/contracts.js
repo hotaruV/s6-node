@@ -10,7 +10,7 @@ const ContractsSchema = Schema({
   status: { type: String, require },
   period: { type: Schema.Types.ObjectId, require, ref: "contract.period", autopopulate: true},
   value: { type: Schema.Types.ObjectId, require, ref: "contract.value", autopopulate: true},
-  items: [{ type: Schema.Types.ObjectId, require, ref: "contract.items", autopopulate: true }],
+  items: [{ type: Schema.Types.ObjectId, require, ref: "items", autopopulate: true }],
   dateSigned: { type: Date, require },
   documents: [
     {

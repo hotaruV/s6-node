@@ -10,7 +10,7 @@ const awardSchema = Schema({
     date: { type: Date, require },
     value: { type: Schema.Types.ObjectId, require, ref: "award.value", autopopulate: true },
     suppliers: [{ type: Schema.Types.ObjectId, require, ref: "awards.suppliers", autopopulate: true }],
-    items: [{ type: Schema.Types.ObjectId, require, ref: "award.items", autopopulate: true }],
+    items: [{ type: Schema.Types.ObjectId, require, ref: "items", autopopulate: true }],
     contractPeriod: { type: Schema.Types.ObjectId, require, ref: "awards.contractPeriod", autopopulate: true},
     documents: [
       {

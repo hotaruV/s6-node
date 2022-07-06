@@ -29,6 +29,7 @@ app.use("/api/seaslp/parties", require("../routes/parties.routes"));
 app.use("/api/seaslp/buyers", require("../routes/buyers.routes"));
 app.use("/api/seaslp/relases", require("../routes/releases.routes"));
 app.use("/api/seaslp/awards", require("../routes/awards.routes"));
+app.use("/api/seaslp/items", require("../routes/items.routes"));
 
 // app.use('/api/upload', require('../routes/uploadsFiles.routes'));
 export default app;

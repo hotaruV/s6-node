@@ -7,7 +7,7 @@ const TendersSchema = Schema({
   title: { type: String, require },
   description: { type: String, require },
   status: { type: String, require },
-  items: [{ type: Schema.Types.ObjectId, require, ref: "tender.items", autopopulate: true }],
+  items: [{ type: Schema.Types.ObjectId, require, ref: "items", autopopulate: true }],
   minValue: {
     type: Schema.Types.ObjectId,
     require,
