@@ -10,6 +10,8 @@ const route = Router();
 
 
 route.get('/summary', ApiController.Summary);
+route.get('/top/:n/buyers', ApiController.topBuyers);
+route.get('/top/:n/suppliers', ApiController.topsupplier);
 
     
 module.exports = route;
