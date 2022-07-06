@@ -7,5 +7,8 @@ route.use(E_fileUpload())
 
 route.post("/licitacion", [validarJWT], ReleaseController.licitacionCreate);
 route.get("/licitacion/:id",  ReleaseController.licitacionShow);
-
+route.post("/adjudicacion", [validarJWT], ReleaseController.adjudicacionCreate);
+route.get("/adjudicacion/:id",  ReleaseController.adjudicacionShow);
+route.post("/contrato", [validarJWT], ReleaseController.contratoCreate);
+route.get("/licitcontratoacion/:id",  ReleaseController.contratoShow);
 module.exports = route;

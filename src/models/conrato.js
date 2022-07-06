@@ -9,7 +9,7 @@ const ReleaseTag = {
     message: '{VALUE} No es un Rol Permitido'
 }
 
-const LicitacionSchema = new Schema({
+const ContractSchema = new Schema({
     ocid: { type: String, require },
     id: { type: String, require },
     date: { type: String, require },
@@ -22,12 +22,13 @@ const LicitacionSchema = new Schema({
     initiationType: { type: String, require },
     parties: [{ type: Schema.Types.ObjectId, require, ref: 'partie' }],
     buyer: { type: Schema.Types.ObjectId, require, ref: 'buyer' },
-    tender: { type: Schema.Types.ObjectId, require, ref: 'tender' },
+    awards: { type: Schema.Types.ObjectId, require, ref: 'awards' },
+    contracts: { type: Schema.Types.ObjectId, require, ref: 'contract' },
 });
 
-LicitacionSchema.method("toJSON", function () {
+ContractSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   return object;
 });
 
-module.exports = model("relase.licitacion", LicitacionSchema);
+module.exports = model("relase.contract", ContractSchema);
