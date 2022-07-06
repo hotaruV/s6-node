@@ -4,10 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel src --outdir dist",
+    "build": "babel src/index.js -o /dist/index.js",
     "babel-node": "babel-node src/index.js",
-    "dev": "nodemon --exec npm run babel-node src/index.js",
-    "start": "node dist/"
+    "dev": "nodemon --exec npm run babel-node src/index.js"
   },
   "keywords": [],
   "author": "",
