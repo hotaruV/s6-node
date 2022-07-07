@@ -25,7 +25,7 @@ const awardSchema = Schema({
       },
     ],
   });
-  awardSchema.plugin(require('mongoose-autopopulate'));
+awardSchema.plugin(require('mongoose-autopopulate'));
 awardSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   return object;

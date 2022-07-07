@@ -10,16 +10,16 @@ import getID from "../helpers/getId";
 const PartiesController = {
   identifier: async (req, res = response) => {
     const ide = new identifier(req.body);
-
-    let z=0;
-    do {
-      let scheme = schemaGen();
-      const ExisteScheme = await identifier.findOne({scheme});
-      if (!ExisteScheme) {
-        z=1;
-      }
-    console.log(scheme);
-    }while(z!=1);
+    ide.scheme = "MX-RFC";
+    // let z=0;
+    // do {
+    //   let scheme = schemaGen();
+    //   const ExisteScheme = await identifier.findOne({scheme});
+    //   if (!ExisteScheme) {
+    //     z=1;
+    //   }
+    // console.log(scheme);
+    // }while(z!=1);
 
     function isUrl(s) {
       var regexp =

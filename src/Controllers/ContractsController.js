@@ -3,6 +3,9 @@ import getID from "../helpers/getId";
 import contratos from "../models/contracts/contracts";
 import ContractPeriod from "../models/contracts/contractPeriod";
 import value from "../models/contracts/value";
+import contractIm from "../models/contracts/contractIm/contract";
+import contractEn from "../models/contracts/contractEn/contract";
+import implementation from "../models/contracts/contractIm/implementation";
 
 const ContractsController = {
   documents: async (req, res = response) => {
@@ -139,8 +142,7 @@ const ContractsController = {
     const id = req.params.id;
     console.log(id);
     const contract = await contratos
-      .findOne({ id: id })
-      .populate("value", "-__v");
+      .findOne({ id: id });
 
     if (!contract) {
       return res.status(404).json({
@@ -172,6 +174,87 @@ const ContractsController = {
     this.classifications();
     this.additionalClassifications();
     this.contractCreate();
+  },
+  implementation: async (req, res = response) => {
+    const val = new implementation(req.body);
+    let count = await getID(implementation);
+    val.transactions.id = count;
+    await val.save();
+
+    return res.status(400).json({
+      ok: true,
+      implementation: val,
+    });
+  },
+  contractImCreate: async (req, res = response) => {
+    //console.log(req.body);
+    const contract = new contractIm(req.body);
+    await contract.save();
+    return res.status(400).json({
+      ok: true,
+      contractIm,
+    });
+  },
+  contractImShow: async (req, res = response) => {
+    const id = req.params.id;
+    console.log(id);
+    const contract = await contractIm
+      .findOne({ id: id })
+      .populate("payer", "-__v")
+      .populate("payee", "-__v")
+      .populate("value", "-__v");
+    if (!contract) {
+      return res.status(404).json({
+        ok: false,
+        msg: "No hay registro hecho",
+      });
+    }
+    res.status(200).json({
+      contract: {
+        id: contract.id,
+        awardID: contract.awardID,
+        implementation: contract.implementation,
+      },
+    });
+  },
+  contractEnCreate: async (req, res = response) => {
+    //console.log(req.body);
+    const contract = new contractEn(req.body);
+    await contract.save();
+    return res.status(400).json({
+      ok: true,
+      contractEn,
+    });
+  },
+  contractEnShow: async (req, res = response) => {
+    const id = req.params.id;
+    console.log(id);
+    const contract = await contractEn
+      .findOne({ id: id })
+      .populate("payer", "-__v")
+      .populate("payee", "-__v")
+      .populate("value", "-__v");
+    if (!contract) {
+      return res.status(404).json({
+        ok: false,
+        msg: "No hay registro hecho",
+      });
+    }
+    res.status(200).json({
+      contract: {
+        id: contract.id,
+        awardID: contract.awardID,
+        title: contract.title,
+        description: contract.description,
+        status: contract.status,
+        period: contract.period,
+        value: contract.value,
+        items: contract.items,
+        dateSigned: contract.dateSigned,
+        documents: contract.documents,
+        amendments: contract.amendments
+      },
+    });
   },
   contractUpdate: async (req, res = response) => {},
 };

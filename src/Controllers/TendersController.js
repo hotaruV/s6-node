@@ -1,5 +1,4 @@
 import response from "express";
-import TendersDocuments from "../models/tenders/documents";
 import procuringEntity from "../models/tenders/procuringEntity";
 import tenderPeriod from "../models/tenders/tenderPeriod";
 import awardPeriod from "../models/tenders/awardPeriod";
@@ -10,91 +9,89 @@ import tenders from "../models/tenders/tenders";
 import getID from "../helpers/getId";
 
 const TendersController = {
-  documents: async (req, res = response) => {
-    /*console.log(req.files);
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({
-        ok: false,
-        msg: "No Hay archivos",
-      });
-    }
-    const tipo = "documentos";
-    const file = req.files.document;
-    const originalName = req.files.document.name;
-    console.log(originalName);
-    const shotName = file.name.split(".");
-    const extension = shotName[shotName.length - 1];
-    const validas = ["pdf"];
-    if (!validas.includes(extension)) {
-      return res.status(400).json({
-        ok: false,
-        msg: "Archivo Invalido solo se permiten pdfs",
-      });
-    }
-    const nameFile = `${uuidv4()}.${extension}`;
-    const path = `./src/uploads/${tipo}/${uuidv4()}-${originalName}`;
-    file.mv(path, (err) => {
-      if (err)
-        return res.status(500).json({
-          ok: false,
-          msg: "Error al mover imagen",
-        });
+  // documents: async (req, res = response) => {
+  //   /*console.log(req.files);
+  //   if (!req.files || Object.keys(req.files).length === 0) {
+  //     return res.status(400).json({
+  //       ok: false,
+  //       msg: "No Hay archivos",
+  //     });
+  //   }
+  //   const tipo = "documentos";
+  //   const file = req.files.document;
+  //   const originalName = req.files.document.name;
+  //   console.log(originalName);
+  //   const shotName = file.name.split(".");
+  //   const extension = shotName[shotName.length - 1];
+  //   const validas = ["pdf"];
+  //   if (!validas.includes(extension)) {
+  //     return res.status(400).json({
+  //       ok: false,
+  //       msg: "Archivo Invalido solo se permiten pdfs",
+  //     });
+  //   }
+  //   const nameFile = `${uuidv4()}.${extension}`;
+  //   const path = `./src/uploads/${tipo}/${uuidv4()}-${originalName}`;
+  //   file.mv(path, (err) => {
+  //     if (err)
+  //       return res.status(500).json({
+  //         ok: false,
+  //         msg: "Error al mover imagen",
+  //       });
 
-      //actualizar Imaagen
-      //actualizarImagen(tipo, id, nameFile)
+  //     //actualizar Imaagen
+  //     //actualizarImagen(tipo, id, nameFile)
 
-      res.status(200).json({
-        ok: true,
-        msg: "Archivo subido exitosamente",
-        nombre: originalName,
-      });
-    });*/
+  //     res.status(200).json({
+  //       ok: true,
+  //       msg: "Archivo subido exitosamente",
+  //       nombre: originalName,
+  //     });
+  //   });*/
 
-    let date = new Date();
-    let time =
-      " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    let output =
-      String(date.getDate()).padStart(2, "0") +
-      "/" +
-      String(date.getMonth() + 1).padStart(2, "0") +
-      "/" +
-      date.getFullYear();
+  //   let date = new Date();
+  //   let time =
+  //     " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  //   let output =
+  //     String(date.getDate()).padStart(2, "0") +
+  //     "/" +
+  //     String(date.getMonth() + 1).padStart(2, "0") +
+  //     "/" +
+  //     date.getFullYear();
 
-    const Docs = new TendersDocuments(req.body);
+  //   const Docs = new TendersDocuments(req.body);
 
-    function isUrl(s) {
-      var regexp =
-        /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-      return regexp.test(s);
-    }
+  //   function isUrl(s) {
+  //     var regexp =
+  //       /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+  //     return regexp.test(s);
+  //   }
 
-    let ur = req.body.url;
-    let x = isUrl(ur);
+  //   let ur = req.body.url;
+  //   let x = isUrl(ur);
 
-    if (!x) {
-      return res.status(400).json({
-        ok: false,
-        msg: "Necesita ser una URL válida",
-      });
-    }
+  //   if (!x) {
+  //     return res.status(400).json({
+  //       ok: false,
+  //       msg: "Necesita ser una URL válida",
+  //     });
+  //   }
 
-    Docs.documentType = "tenderNotice";
-    Docs.datePublished = output + time;
-    Docs.language = "es";
-    Docs.format;
-    let count = await getID(TendersDocuments);
-    Docs.id = count;
-    await Docs.save();
-    return res.status(400).json({
-      ok: true,
-      documents: Docs,
-      msg: "Documento subido de manera exitosa",
-    });
-  },
+  //   Docs.documentType = "tenderNotice";
+  //   Docs.datePublished = output + time;
+  //   Docs.language = "es";
+  //   Docs.format;
+  //   let count = await getID(TendersDocuments);
+  //   Docs.id = count;
+  //   await Docs.save();
+  //   return res.status(400).json({
+  //     ok: true,
+  //     documents: Docs,
+  //     msg: "Documento subido de manera exitosa",
+  //   });
+  // },
   procuringEntity: async (req, res = response) => {
     const Procuring = new procuringEntity(req.body);
-    let count = await getID(procuringEntity);
-    Procuring.id = count;
     await Procuring.save();
     return res.status(400).json({
       ok: true,

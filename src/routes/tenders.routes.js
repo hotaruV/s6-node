@@ -5,7 +5,6 @@ import E_fileUpload from 'express-fileupload';
 const route = Router();
 route.use(E_fileUpload());
 
-route.post("/documents", [validarJWT], TendersController.documents);
 route.post("/procuringEntity", [validarJWT], TendersController.procuringEntity);
 route.post("/tenderPeriod", [validarJWT], TendersController.tenderPeriod);
 route.post("/awardPeriod", [validarJWT], TendersController.awardPeriod);
