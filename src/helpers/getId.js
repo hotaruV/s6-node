@@ -38,4 +38,4 @@ function zfill(number, width) {
   }
 }
 
-module.exports = getID;
+export default getID;

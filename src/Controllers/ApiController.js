@@ -6,7 +6,7 @@ import supplier from "../models/award/suppliers";
 import { getID } from "../helpers/getId";
 
 const ApiController = {
-  Summary: async (req, res = response) => {
+  summary: async (req, res = response) => {
     let releases = licitacion;
     let buyers = buyer;
     let totalAmount = tenders;
@@ -54,7 +54,6 @@ const ApiController = {
       });
     });
   },
-
   topBuyers: async (req, res) => {
     let { n } = req.params;
     if (isNaN(n)) {
@@ -96,6 +95,127 @@ const ApiController = {
       suppliers,
       total,
     });
+  },
+  search: async (req, res) => {
+    const MAX_RESULTS = 10;
+    let pageSize = req.body.pageSize || MAX_RESULTS;
+    let page = req.body.page || 0;
+
+    let {
+      contract_title,
+      ocid,
+      buyer_id,
+      procurementMethod,
+      supplierName,
+      tender_title,
+      cycle,
+    } = req.body;
+
+    if (isNaN(page)) {
+      page = 0;
+    } else {
+      page = Math.abs(page);
+    }
+
+    if (isNaN(pageSize)) {
+      pageSize = MAX_RESULTS;
+    } else {
+      pageSize = Math.abs(pageSize);
+      pageSize = pageSize > 200 ? 200 : pageSize;
+    }
+
+    let query = {};
+
+    if (typeof buyer_id !== "undefined") {
+      query["buyer.id"] = buyer_id;
+    }
+
+    if (typeof procurementMethod !== "undefined") {
+      query["tender.procurementMethod"] = procurementMethod;
+    }
+
+    if (typeof contract_title !== "undefined") {
+      query["contracts.title"] = { $regex: contract_title, $options: "i" };
+    }
+
+    if (typeof tender_title !== "undefined") {
+      query["tender.title"] = { $regex: tender_title, $options: "i" };
+    }
+
+    if (typeof cycle !== "undefined") {
+      query["cycle"] = cycle;
+    }
+
+    if (typeof supplierName !== "undefined") {
+      query["$and"] = [
+        {
+          "parties.name": {
+            $regex: supplierName,
+            $options: "i",
+          },
+        },
+        { "parties.roles": "buyer" },
+      ];
+    }
+
+    if (typeof ocid !== "undefined") {
+      query["ocid"] = ocid;
+    }
+
+    let options = {
+      limit: pageSize,
+      skip: page * pageSize,
+      sort: { cycle: -1, date: -1 },
+    };
+
+    let data = await licitacion.countDocuments(query).then((count) => {
+      licitacion.find(query, options);
+      res.json({
+        pagination: {
+          total: count,
+          page: page,
+          pageSize: pageSize,
+        },
+        data,
+      });
+    });
+
+    // lic.countDocuments(query).then((count) => {
+    //   lic.find(query, options).fetch((error, data) => {
+    //     res.json({
+    //       pagination: {
+    //         total: count,
+    //         page: page,
+    //         pageSize: pageSize,
+    //       },
+    //       data: data,
+    //     });
+    //   });
+    // });
+  },
+  release: async (req, res) => {
+    const id = req.params.ocid;
+    try {
+      let ID = getID(licitacion);
+      const lic = await licitacion
+        .findById(id)
+        .populate("parties", "-__v")
+        .populate("buyer", "-__v")
+        .populate("tender", "-__v");
+
+      const text = JSON.stringify(data, null, 4);
+      res.setHeader("Content-type", "application/octet-stream");
+      res.setHeader(
+        "Content-disposition",
+        "attachment; filename=" + ocid + ".json"
+      );
+
+      res.send(text);
+    } catch (error) {
+      res.status(200).json({
+        msg: "no existe ocid",
+      });
+    }
   },
 };
 
