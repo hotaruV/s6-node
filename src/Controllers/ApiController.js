@@ -3,6 +3,7 @@ import licitacion from "../models/licitacion";
 import buyer from "../models/buyer/buyer";
 import tenders from "../models/tenders/tenders";
 import supplier from "../models/award/suppliers";
+import Productos from "../models/cfdi";
 import { getID } from "../helpers/getId";
 
 const ApiController = {
@@ -11,23 +12,26 @@ const ApiController = {
     let buyers = buyer;
     let totalAmount = tenders;
     let contracts_amounts = tenders;
+    let regexOP = new RegExp("open", "i");
+    let regexSel = new RegExp("selective", "i");
+    let regexdir = new RegExp("direct", "i");
 
     let queries = [
       releases.countDocuments(),
       buyers.countDocuments(),
       releases.countDocuments({
-        "tender.procurementMethod": { $regex: "open", $options: "i" },
+        "tender.procurementMethod": { regexOP },
       }),
       releases.countDocuments({
-        "tender.procurementMethod": { $regex: "selective", $options: "i" },
+        "tender.procurementMethod": { regexSel },
       }),
       releases.countDocuments({
-        "tender.procurementMethod": { $regex: "direct", $options: "i" },
+        "tender.procurementMethod": { regexdir },
       }),
       totalAmount.findOne(),
-      contracts_amounts.findOne({ procurementMethod: "open" }),
-      contracts_amounts.findOne({ procurementMethod: "selective" }),
-      contracts_amounts.findOne({ procurementMethod: "direct" }),
+      contracts_amounts.findOne({ procurementMethod: regexOP }),
+      contracts_amounts.findOne({ procurementMethod: regexSel }),
+      contracts_amounts.findOne({ procurementMethod: regexdir }),
       contracts_amounts.findOne({ procurementMethod: null }),
     ];
 
@@ -216,6 +220,21 @@ const ApiController = {
         msg: "no existe ocid",
       });
     }
+  },
+
+  cfdi: async (req, res) => {
+    let busqueda = req.query.busqueda;
+    let limite = req.query.limit;
+    if (busqueda == undefined || busqueda == null) {
+      busqueda = "No existe en el catálogo";
+    } else {
+      busqueda = busqueda;
+    }
+    const regex = new RegExp(busqueda, "i");
+    const producto = await Productos.find({ descripcion: regex }).limit(limite);
+    res.status(400).json({
+      "productoservicio":producto,
+    });
   },
 };
 
