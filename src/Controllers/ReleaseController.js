@@ -16,7 +16,6 @@ const ReleaseController = {
       let date = new Date().toDateString();
       lic.ocid = `${count}- ${date}`;
       lic.date = date;
-      console.log(lic.id);
       await lic.save();
       return res.status(400).json({
         ok: true,
@@ -64,8 +63,13 @@ const ReleaseController = {
   adjudicacionCreate: async (req, res = response) => {
     try {
       const lic = new adjudicacion(req.body);
-      let count = await getID(adjudicacion, true);
+      let count = await getID(licitacion);
       lic.id = count;
+      count = await getID(licitacion, true);
+      let date = new Date().toDateString();
+      lic.ocid = `${count}- ${date}`;
+      lic.date = date;
+      
       console.log(lic.id);
       await lic.save();
       return res.status(400).json({
@@ -168,9 +172,12 @@ const ReleaseController = {
   implementacionCreate: async (req, res = response) => {
     try {
       const lic = new implementacion(req.body);
-      let count = await getID(implementacion, true);
+      let count = await getID(licitacion);
       lic.id = count;
-      console.log(lic.id);
+      count = await getID(licitacion, true);
+      let date = new Date().toDateString();
+      lic.ocid = `${count}- ${date}`;
+      lic.date = date;
       await lic.save();
       return res.status(400).json({
         ok: true,
@@ -218,9 +225,12 @@ const ReleaseController = {
   enmiendaCreate: async (req, res = response) => {
     try {
       const lic = new enmienda(req.body);
-      let count = await getID(enmienda, true);
+      let count = await getID(licitacion);
       lic.id = count;
-      console.log(lic.id);
+      count = await getID(licitacion, true);
+      let date = new Date().toDateString();
+      lic.ocid = `${count}- ${date}`;
+      lic.date = date;
       await lic.save();
       return res.status(400).json({
         ok: true,

@@ -57,6 +57,16 @@ const TendersSchema = Schema({
       language: { type: String },
     },
   ],
+  amendments: [
+    {
+      id: { type: String },
+      date: { type: String },
+      rationale: { type: String },
+      description: { type: String },
+      amendsReleaseID: { type: String },
+      releaseID: { type: String },
+     }
+ ]
 });
 TendersSchema.plugin(require('mongoose-autopopulate'));
 TendersSchema.method("toJSON", function () {

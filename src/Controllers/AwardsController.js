@@ -1,7 +1,7 @@
 import { response } from "express";
 import  contractPeriod  from "../models/award/contractPeriod";
 import  suppliers  from "../models/award/suppliers";
-import  value  from "../models/award/suppliers";
+import  value  from "../models/award/value";
 import  award  from "../models/award/awards";
 import  getID  from "../helpers/getId";
 
@@ -68,6 +68,9 @@ const AwardsController = {
       const aw = new award(req.body);
       let count = await getID(award, true);
       aw.id = `${count}-award`;
+      aw.documents.id = count;
+      let date = new Date().toDateString();
+      aw.date = date;
       await aw.save();
       return res.status(400).json({
         ok: true,

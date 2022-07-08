@@ -10,7 +10,7 @@ route.get("/licitacion/:id",  ReleaseController.licitacionShow);
 route.post("/adjudicacion", [validarJWT], ReleaseController.adjudicacionCreate);
 route.get("/adjudicacion/:id",  ReleaseController.adjudicacionShow);
 route.post("/contrato", [validarJWT], ReleaseController.contratoCreate);
-route.get("/licitcontratoacion/:id",  ReleaseController.contratoShow);
+route.get("/contrato/:id",  ReleaseController.contratoShow);
 route.post("/implementacion", [validarJWT], ReleaseController.implementacionCreate);
 route.get("/implementacion/:id",  ReleaseController.implementacionShow);
 route.post("/enmienda", [validarJWT], ReleaseController.enmiendaCreate);
