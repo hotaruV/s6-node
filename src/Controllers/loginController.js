@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs";
 
 const loginController = {
   login: async (req, res = response) => {
-    const { email, password } = req.body;
     try {
+      const { email, password } = req.body;
       const usuarioDB = await Usuario.findOne({ email });
       if (!usuarioDB) {
         return res.status(400).json({
@@ -36,13 +36,19 @@ const loginController = {
     }
   },
   renewToken: async (req, res = response) => {
-    const uid = req.uid;
-    const token = await JWTgenerate(uid);
-    res.status(200).json({
-      ok: true,
-      uid,
-      token,
-    });
+    try {
+      const uid = req.uid;
+      const token = await JWTgenerate(uid);
+      res.status(200).json({
+        ok: true,
+        uid,
+        token,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
   },
   ChangePass: async (req, res = response) => {
     try {
@@ -52,31 +58,33 @@ const loginController = {
       if (!userData) {
         res.status(200).json({
           ok: false,
-          msg: "El usuario no existe en la base de datos"
+          msg: "El usuario no existe en la base de datos",
         });
       }
       if (!bcrypt.compareSync(lastpassword, userData.password)) {
         res.status(200).json({
           ok: false,
-          msg: "usuario o contraseña invalidos"
+          msg: "usuario o contraseña invalidos",
         });
       }
       const salt = bcrypt.genSaltSync();
       newpassword = bcrypt.hashSync(newpassword, salt);
-      
+
       const passwordUpdate = await Usuario.updateOne(
         { email },
-        { $set: { password: newpassword,  fist_login: false} }
+        { $set: { password: newpassword, fist_login: false } }
       );
 
       if (passwordUpdate) {
         return res.status(400).json({
           ok: false,
-          msg: "Contraseña cambiada Satisfactoriamente"
+          msg: "Contraseña cambiada Satisfactoriamente",
         });
       }
     } catch (error) {
-      //console.log(error);
+      return res.status(404).json({
+        ok: false,
+      });
     }
   },
 };

@@ -91,161 +91,202 @@ const TendersController = {
   //   });
   // },
   procuringEntity: async (req, res = response) => {
-    const Procuring = new procuringEntity(req.body);
-    await Procuring.save();
-    return res.status(400).json({
-      ok: true,
-      Procuring,
-    });
-  },
-  tenderPeriod: async (req, res = response) => {
-    let fecha_fin = new Date(req.body.endDate).getTime();
-    let fecha_inicio = new Date(req.body.startDate).getTime();
-    if (fecha_inicio > fecha_fin) {
+    try {
+      const Procuring = new procuringEntity(req.body);
+      await Procuring.save();
       return res.status(400).json({
         ok: true,
-        msg: "Fecha final no debe se menor a la fecha de inicio",
       });
-    }
-
-    let maxExtend2 = req.body.maxExtentDate;
-    let diff = fecha_fin - fecha_inicio;
-    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
-    const Period = new tenderPeriod(req.body);
-    Period.durationInDays = period;
-    let count = await getID(tenderPeriod);
-    Period.id = count;
-    await Period.save();
-
-    return res.status(400).json({
-      ok: true,
-      tenderPeriod: Period,
-    });
-  },
-  awardPeriod: async (req, res = response) => {
-    let fecha_fin = new Date(req.body.endDate).getTime();
-    let fecha_inicio = new Date(req.body.startDate).getTime();
-
-    if (fecha_inicio > fecha_fin) {
-      return res.status(400).json({
-        ok: true,
-        msg: "Fecha final no debe se menor a la fecha de inicio",
-      });
-    }
-
-    let maxExtend2 = req.body.maxExtentDate;
-    let diff = fecha_fin - fecha_inicio;
-    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
-    const PeriodAw = new awardPeriod(req.body);
-    PeriodAw.durationInDays = period;
-    let count = await getID(awardPeriod);
-    PeriodAw.id = count;
-    await PeriodAw.save();
-
-    return res.status(400).json({
-      ok: true,
-      awardPeriod: PeriodAw,
-    });
-  },
-  enquiryPeriod: async (req, res = response) => {
-    let fecha_fin = new Date(req.body.endDate).getTime();
-    let fecha_inicio = new Date(req.body.startDate).getTime();
-
-    if (fecha_inicio > fecha_fin) {
-      return res.status(400).json({
-        ok: true,
-        msg: "Fecha final no debe se menor a la fecha de inicio",
-      });
-    }
-
-    let maxExtend2 = req.body.maxExtentDate;
-    let diff = fecha_fin - fecha_inicio;
-    let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
-    const Period = new enquiryPeriod(req.body);
-    let count = await getID(enquiryPeriod);
-
-    Period.durationInDays = period;
-    Period.id = count;
-    //console.log(count);
-    await Period.save();
-
-    return res.status(400).json({
-      ok: true,
-      enquiryPeriod: Period,
-    });
-  },
-  minValue: async (req, res = response) => {
-    const val = new minValue(req.body);
-    let count = await getID(minValue);
-    val.id = count;
-    await val.save();
-
-    return res.status(400).json({
-      ok: true,
-      minValue: val,
-    });
-  },
-  value: async (req, res = response) => {
-    const val = new value(req.body);
-    let count = await getID(value);
-    val.id = count;
-    await val.save();
-
-    return res.status(400).json({
-      ok: true,
-      value: val,
-    });
-  },
-  tendersCreate: async (req, res = response) => {
-    const tender = new tenders(req.body);
-    let count = await getID(tenders, true);
-    tender.id = `${count}-tender`;
-    console.log(tender.id);
-    await tender.save();
-    return res.status(400).json({
-      ok: true,
-      tender,
-    });
-  },
-  tendersShow: async (req, res = response) => {
-    const id = req.params.id;
-    console.log(id);
-    const tender = await tenders
-      .findOne({ id: id })
-      .populate("minValue", "-__v")
-      .populate("value", "-__v")
-      .populate("procuringEntity", "name")
-      .populate("tenderPeriod", "-__v")
-      .populate("awardPeriod", "-__v")
-      .populate("enquiryPeriod", "-__v");
-    if (!tender) {
+    } catch (error) {
       return res.status(404).json({
         ok: false,
-        msg: "No hay registro hecho",
       });
     }
-    res.status(200).json({
-      tender: {
-        id: tender.id,
-        title: tender.title,
-        description: tender.description,
-        status: tender.status,
-        items: tender.items,
-        minValue: tender.minValue,
-        value: tender.value,
-        procurementMethod: tender.procurementMethod,
-        procurementMethodRationale: tender.procurementMethodRationale,
-        awardCriteria: tender.awardCriteria,
-        awardCriteriaDetails: tender.awardCriteriaDetails,
-        submissionMethodDetails: tender.submissionMethodDetails,
-        enquiryPeriod: tender.enquiryPeriod,
-        hasEnquiries: tender.hasEnquiries,
-        tenderPeriod: tender.tenderPeriod,
-        awardPeriod: tender.awardPeriod,
-        procuringEntity: tender.procuringEntity,
-        documents: tender.documents,
-      },
-    });
+  },
+  tenderPeriod: async (req, res = response) => {
+    try {
+      let fecha_fin = new Date(req.body.endDate).getTime();
+      let fecha_inicio = new Date(req.body.startDate).getTime();
+      if (fecha_inicio > fecha_fin) {
+        return res.status(400).json({
+          ok: true,
+          msg: "Fecha final no debe se menor a la fecha de inicio",
+        });
+      }
+
+      let maxExtend2 = req.body.maxExtentDate;
+      let diff = fecha_fin - fecha_inicio;
+      let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
+      const Period = new tenderPeriod(req.body);
+      Period.durationInDays = period;
+      let count = await getID(tenderPeriod);
+      Period.id = count;
+      await Period.save();
+
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
+  },
+  awardPeriod: async (req, res = response) => {
+    try {
+      let fecha_fin = new Date(req.body.endDate).getTime();
+      let fecha_inicio = new Date(req.body.startDate).getTime();
+
+      if (fecha_inicio > fecha_fin) {
+        return res.status(400).json({
+          ok: true,
+          msg: "Fecha final no debe se menor a la fecha de inicio",
+        });
+      }
+
+      let maxExtend2 = req.body.maxExtentDate;
+      let diff = fecha_fin - fecha_inicio;
+      let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
+      const PeriodAw = new awardPeriod(req.body);
+      PeriodAw.durationInDays = period;
+      let count = await getID(awardPeriod);
+      PeriodAw.id = count;
+      await PeriodAw.save();
+
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
+  },
+  enquiryPeriod: async (req, res = response) => {
+    try {
+      let fecha_fin = new Date(req.body.endDate).getTime();
+      let fecha_inicio = new Date(req.body.startDate).getTime();
+
+      if (fecha_inicio > fecha_fin) {
+        return res.status(400).json({
+          ok: true,
+          msg: "Fecha final no debe se menor a la fecha de inicio",
+        });
+      }
+
+      let maxExtend2 = req.body.maxExtentDate;
+      let diff = fecha_fin - fecha_inicio;
+      let period = diff / (1000 * 60 * 60 * 24) + parseInt(maxExtend2);
+      const Period = new enquiryPeriod(req.body);
+      let count = await getID(enquiryPeriod);
+
+      Period.durationInDays = period;
+      Period.id = count;
+      //console.log(count);
+      await Period.save();
+
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
+  },
+  minValue: async (req, res = response) => {
+    try {
+      const val = new minValue(req.body);
+      let count = await getID(minValue);
+      val.id = count;
+      await val.save();
+
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
+  },
+  value: async (req, res = response) => {
+    try {
+      const val = new value(req.body);
+      let count = await getID(value);
+      val.id = count;
+      await val.save();
+
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
+  },
+  tendersCreate: async (req, res = response) => {
+    try {
+      const tender = new tenders(req.body);
+      let count = await getID(tenders, true);
+      tender.id = `${count}-tender`;
+      console.log(tender.id);
+      await tender.save();
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
+  },
+  tendersShow: async (req, res = response) => {
+    try {
+      const id = req.params.id;
+      console.log(id);
+      const tender = await tenders
+        .findOne({ id: id })
+        .populate("minValue", "-__v")
+        .populate("value", "-__v")
+        .populate("procuringEntity", "name")
+        .populate("tenderPeriod", "-__v")
+        .populate("awardPeriod", "-__v")
+        .populate("enquiryPeriod", "-__v");
+      if (!tender) {
+        return res.status(404).json({
+          ok: false,
+          msg: "No hay registro hecho",
+        });
+      }
+      res.status(200).json({
+        tender: {
+          id: tender.id,
+          title: tender.title,
+          description: tender.description,
+          status: tender.status,
+          items: tender.items,
+          minValue: tender.minValue,
+          value: tender.value,
+          procurementMethod: tender.procurementMethod,
+          procurementMethodRationale: tender.procurementMethodRationale,
+          awardCriteria: tender.awardCriteria,
+          awardCriteriaDetails: tender.awardCriteriaDetails,
+          submissionMethodDetails: tender.submissionMethodDetails,
+          enquiryPeriod: tender.enquiryPeriod,
+          hasEnquiries: tender.hasEnquiries,
+          tenderPeriod: tender.tenderPeriod,
+          awardPeriod: tender.awardPeriod,
+          procuringEntity: tender.procuringEntity,
+          documents: tender.documents,
+        },
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+      });
+    }
   },
   tenderButton: () => {
     this.documents();

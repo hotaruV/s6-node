@@ -6,6 +6,7 @@ import fs from 'fs';
 
 const UploadController = {
     fileUpload: async(req, res = response) => {
+        try{
         const tipo = req.params.tipo;
         const id = req.params.id;
 
@@ -60,9 +61,14 @@ const UploadController = {
                 nameFile
             })
         });
+    } catch (error) {
+        return res.status(404).json({
+          ok: false,
+        });
+      }
     },
     getImages: async(req, res = response) => {
-
+        try{
         const tipo = req.params.tipo
         const foto = req.params.foto
         const pathImg = path.join(__dirname, `../uploads/${tipo}/${foto}`);
@@ -74,7 +80,11 @@ const UploadController = {
             res.sendFile(pathImg)
         }
 
-
+    } catch (error) {
+        return res.status(404).json({
+          ok: false,
+        });
+      }
         /*
         Client ID
         128905102745-sg1o74sf0veu04ganlessh92ggli3b3m.apps.googleusercontent.com

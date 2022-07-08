@@ -1,5 +1,8 @@
 const getID = async (model, ocid = false) => {
   const cont = await model.count(); //1
+  const ult = model.id;
+  console.log(model);
+  
   let numID = 0;
   numID = cont + 1;
   if (ocid) {

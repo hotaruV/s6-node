@@ -1,144 +1,140 @@
 import { response } from "express";
-import { contractPeriod } from "../models/award/contractPeriod";
-import { suppliers } from "../models/award/suppliers";
-import { value } from "../models/award/suppliers";
-import { documents } from "../models/award/documents";
-import { award } from "../models/award/awards";
-import { getID } from "../helpers/getId";
+import  contractPeriod  from "../models/award/contractPeriod";
+import  suppliers  from "../models/award/suppliers";
+import  value  from "../models/award/suppliers";
+import  award  from "../models/award/awards";
+import  getID  from "../helpers/getId";
 
 const AwardsController = {
   contractPeriod: async (req, res = response) => {
-    const contract = new contractPeriod(req.body);
-    let count = await getID(contractPeriod);
-    contract.id = count;
+    try {
+      const contract = new contractPeriod(req.body);
+      let count = await getID(contractPeriod);
+      contract.id = count;
 
-    let fecha_fin = new Date(req.body.endDate).getTime();
-    let fecha_inicio = new Date(req.body.startDate).getTime();
+      let fecha_fin = new Date(req.body.endDate).getTime();
+      let fecha_inicio = new Date(req.body.startDate).getTime();
 
-    if (fecha_inicio > fecha_fin) {
+      if (fecha_inicio > fecha_fin) {
+        return res.status(400).json({
+          ok: true,
+          msg: "Fecha final no debe se menor a la fecha de inicio",
+        });
+      }
+
+      await contract.save();
       return res.status(400).json({
         ok: true,
-        msg: "Fecha final no debe se menor a la fecha de inicio",
       });
-    }
-
-    await contract.save();
-    return res.status(400).json({
-      ok: true,
-      contractPeriod: contract,
-    });
-  },
-  suppliers: async (req, res = response) => {
-    const supplier = new suppliers(req.body);
-    await supplier.save();
-    return res.status(400).json({
-      ok: true,
-      suppliers: supplier,
-    });
-  },
-  value: async (req, res = response) => {
-    const val = new value(req.body);
-    let count = await getID(value);
-    val.id = count;
-    await val.save();
-    return res.status(400).json({
-      ok: true,
-      value: val,
-    });
-  },
-  documents: async (req, res = response) => {
-    let date = new Date();
-    let time =
-      " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    let output =
-      String(date.getDate()).padStart(2, "0") +
-      "/" +
-      String(date.getMonth() + 1).padStart(2, "0") +
-      "/" +
-      date.getFullYear();
-
-    const Docs = new documents(req.body);
-
-    function isUrl(s) {
-      var regexp =
-        /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-      return regexp.test(s);
-    }
-
-    let ur = req.body.url;
-    let x = isUrl(ur);
-
-    if (!x) {
-      return res.status(400).json({
-        ok: false,
-        msg: "Necesita ser una URL válida",
-      });
-    }
-
-    Docs.documentType = "awardNotice";
-    Docs.datePublished = output + time;
-    Docs.language = "es";
-    Docs.format;
-    let count = await getID(documents);
-    Docs.id = count;
-    await Docs.save();
-    return res.status(400).json({
-      ok: true,
-      documents: Docs,
-      msg: "Documento subido de manera exitosa",
-    });
-  },
-  awardsCreate: async (req, res = response) => {
-    const aw = new award(req.body);
-    let count = await getID(award, true);
-    aw.id = `${count}-award`;
-    await aw.save();
-    return res.status(400).json({
-      ok: true,
-      award: aw,
-    });
-  },
-  awardsShow: async (req, res = response) => {
-    const id = req.params.id;
-    console.log(id);
-    const aw = await award
-      .findOne({ id: id })
-      .populate("value", "-__v")
-      .populate("suppliers", "-__v")
-      .populate("items", "-__v")
-      .populate("contractPeriod", "-__v");
-    if (!aw) {
+    } catch (error) {
       return res.status(404).json({
         ok: false,
-        msg: "No hay registro hecho",
+        msg: "Error en servidor por favor comunicarse con administración",
       });
     }
-    res.status(200).json({
-      award: {
-        id: aw.id,
-        title: aw.title,
-        description: aw.description,
-        status: aw.status,
-        date: aw.date,
-        value: aw.value,
-        suppliers: aw.supplier,
-        items: aw.items,
-        contractPeriod: aw.contractPeriod,
-        documents: aw.documents,
-      },
-    });
+  },
+  suppliers: async (req, res = response) => {
+    try{
+      const supplier = new suppliers(req.body);
+      await supplier.save();
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Error en servidor por favor comunicarse con administración",
+      });
+    }
+  },
+  value: async (req, res = response) => {
+    try{  
+      const val = new value(req.body);
+      let count = await getID(value);
+      val.id = count;
+      await val.save();
+      return res.status(400).json({
+        ok: true,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Error en servidor por favor comunicarse con administración",
+      });
+    }
+  },
+  awardsCreate: async (req, res = response) => {
+     try{ 
+      const aw = new award(req.body);
+      let count = await getID(award, true);
+      aw.id = `${count}-award`;
+      await aw.save();
+      return res.status(400).json({
+        ok: true,
+        award: aw,
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Error en servidor por favor comunicarse con administración",
+      });
+    }
+  },
+  awardsShow: async (req, res = response) => {
+    try{
+      const id = req.params.id;
+      console.log(id);
+      const aw = await award
+        .findOne({ id: id })
+        .populate("value", "-__v")
+        .populate("suppliers", "-__v")
+        .populate("items", "-__v")
+        .populate("contractPeriod", "-__v");
+      if (!aw) {
+        return res.status(404).json({
+          ok: false,
+          msg: "No hay registro hecho",
+        });
+      }
+      res.status(200).json({
+        award: {
+          id: aw.id,
+          title: aw.title,
+          description: aw.description,
+          status: aw.status,
+          date: aw.date,
+          value: aw.value,
+          suppliers: aw.supplier,
+          items: aw.items,
+          contractPeriod: aw.contractPeriod,
+          documents: aw.documents,
+        },
+      });
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Error en servidor por favor comunicarse con administración",
+      });
+    }
   },
   awardButton: () => {
-    this.contractPeriod();
-    this.suppliers();
-    this.value();
-    this.documents();
-    this.items();
-    this.classifications();
-    this.additionalClassifications();
-    this.itemValue();
-    this.itemUnit();
-    this.awardsCreate();
+    try{  
+      this.contractPeriod();
+      this.suppliers();
+      this.value();
+      this.documents();
+      this.items();
+      this.classifications();
+      this.additionalClassifications();
+      this.itemValue();
+      this.itemUnit();
+      this.awardsCreate();
+    } catch (error) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Error en servidor por favor comunicarse con administración",
+      });
+    }
   },
 };
 
