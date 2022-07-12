@@ -1,5 +1,5 @@
 [
-    {"id":"1","nombre_ente":"ENTE PUBLICO 1","siglas_ente":"EP1","estado_ente":"01","municipio_ente":"001","alta_usuario":"0","nivel_municipal":"False","nivel_estatal":"True"},
+    {"id":"1","nombre_ente":"ENTE PUBLICO","siglas_ente":"EP1","estado_ente":"01","municipio_ente":"001","alta_usuario":"0","nivel_municipal":"False","nivel_estatal":"True"},
     {"id":"2","nombre_ente":"AGENCIA PRO SAN LUIS","siglas_ente":"PE001","estado_ente":"24","municipio_ente":"028","alta_usuario":"1","nivel_municipal":"False","nivel_estatal":"True"},
     {"id":"3","nombre_ente":"ARCHIVO HISTORICO DEL ESTADO","siglas_ente":"PE002","estado_ente":"24","municipio_ente":"028","alta_usuario":"1","nivel_municipal":"False","nivel_estatal":"True"},
     {"id":"4","nombre_ente":"CASA CUNA MARGARITA MAZA DE JUAREZ","siglas_ente":"PE003","estado_ente":"24","municipio_ente":"028","alta_usuario":"1","nivel_municipal":"False","nivel_estatal":"True"},

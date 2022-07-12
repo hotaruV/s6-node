@@ -16,7 +16,6 @@ route.get("/list-slp", (req, res) => {
   const ruta = resolve(__dirname, "../documents/municipios.json");
   console.log(ruta);
   const fileContents = readFileSync(ruta, "utf8");
-
   try {
     const data = JSON.parse(fileContents);
     res.json({
@@ -27,11 +26,21 @@ route.get("/list-slp", (req, res) => {
   }
 });
 
-route.post("/crear", (req, res) => {
-  res.json({
-    probando: "Hola Mundo",
-  });
+route.get("/entes-publicos", (req, res) => {
+  const ruta = resolve(__dirname, "../documents/entesPublicos.json");
+  console.log(ruta);
+  const fileContents = readFileSync(ruta, "utf8");
+
+  try {
+    const data = JSON.parse(fileContents);
+    res.json({
+      data
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
+
 
 route.get("/servicios/productos", ApiController.cfdi);
 

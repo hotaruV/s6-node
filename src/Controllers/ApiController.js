@@ -221,7 +221,6 @@ const ApiController = {
       });
     }
   },
-
   cfdi: async (req, res) => {
     let busqueda = req.query.busqueda;
     let limite = req.query.limit;
