@@ -72,7 +72,7 @@ const loginController = {
     try {
       //console.log(req.body);
       const uid = req.uid;
-      let { email, password, newpassword, lastpassword } = req.body;
+      let { newpassword, lastpassword } = req.body;
       const userData = await Usuario.findOne({ _id: uid });
       // console.log(userData);
       // return 
@@ -86,7 +86,6 @@ const loginController = {
       newpassword = bcrypt.hashSync(newpassword, salt);
 
       const passwordUpdate = await Usuario.updateOne(
-        { email },
         { $set: { password: newpassword, fist_login: false } }
       );
       const token = await JWTgenerate(userData.id);
