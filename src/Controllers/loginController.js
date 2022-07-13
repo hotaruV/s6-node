@@ -74,13 +74,13 @@ const loginController = {
       let { email, password, newpassword, lastpassword } = req.body;
       const userData = await Usuario.findOne({ email });
       if (!userData) {
-        res.status(200).json({
+        res.status(400).json({
           ok: false,
           msg: "El usuario no existe en la base de datos",
         });
       }
       if (!bcrypt.compareSync(lastpassword, userData.password)) {
-        res.status(200).json({
+        res.status(400).json({
           ok: false,
           msg: "usuario o contraseña invalidos",
         });
@@ -94,7 +94,7 @@ const loginController = {
       );
 
       if (passwordUpdate) {
-        return res.status(400).json({
+        return res.status(200).json({
           ok: true,
           msg: "Contraseña cambiada Satisfactoriamente",
         });
