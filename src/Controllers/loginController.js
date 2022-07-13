@@ -86,6 +86,7 @@ const loginController = {
       newpassword = bcrypt.hashSync(newpassword, salt);
 
       const passwordUpdate = await Usuario.updateOne(
+        { _id: uid },
         { $set: { password: newpassword, fist_login: false } }
       );
       const token = await JWTgenerate(userData.id);
