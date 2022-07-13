@@ -37,9 +37,8 @@ const PartiesController = {
       }
 
       await ide.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
-        identifier: ide,
       });
     } catch (error) {
       return res.status(404).json({
@@ -55,9 +54,8 @@ const PartiesController = {
       let count = await getID(address);
       add.id = count;
 
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
-        address: add,
       });
     } catch (error) {
       return res.status(404).json({
@@ -103,7 +101,7 @@ const PartiesController = {
       contact.id = count;
 
       await contact.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -116,7 +114,7 @@ const PartiesController = {
     try {
       const partie = new parties(req.body);
       await partie.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {

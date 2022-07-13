@@ -35,7 +35,7 @@ const usrController = {
           msg: "No existe usuario",
         });
       } else {
-        return res.status(404).json({
+        return res.status(200).json({
           ok: true,
           user: usuarioDB,
         });
@@ -88,7 +88,7 @@ const usrController = {
           msg: "No existe usuario",
         });
       } else {
-        return res.status(404).json({
+        return res.status(200).json({
           ok: true,
           user: usuarioDB,
         });
@@ -215,14 +215,14 @@ const usrController = {
         );
         //console.log(passwordUpdate);
         if (passwordUpdate) {
-          return res.status(400).json({
-            ok: false,
+          return res.status(200).json({
+            ok: true,
             msg: "Contraseña cambiada Satisfactoriamente",
           });
         }
       } catch (error) {}
     } catch (error) {
-      res.status(200).json({
+      res.status(400).json({
         ok: false,
         msg: "El usuario no existe en la base de datos",
       });

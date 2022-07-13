@@ -17,7 +17,7 @@ const ReleaseController = {
       lic.ocid = `${count}- ${date}`;
       lic.date = date;
       await lic.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -72,7 +72,7 @@ const ReleaseController = {
       
       console.log(lic.id);
       await lic.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -124,7 +124,7 @@ const ReleaseController = {
       lic.id = count;
       console.log(lic.id);
       await lic.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -179,7 +179,7 @@ const ReleaseController = {
       lic.ocid = `${count}- ${date}`;
       lic.date = date;
       await lic.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -232,7 +232,7 @@ const ReleaseController = {
       lic.ocid = `${count}- ${date}`;
       lic.date = date;
       await lic.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {

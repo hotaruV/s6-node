@@ -17,13 +17,13 @@ const AwardsController = {
 
       if (fecha_inicio > fecha_fin) {
         return res.status(400).json({
-          ok: true,
+          ok: false,
           msg: "Fecha final no debe se menor a la fecha de inicio",
         });
       }
 
       await contract.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -37,7 +37,7 @@ const AwardsController = {
     try{
       const supplier = new suppliers(req.body);
       await supplier.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -53,7 +53,7 @@ const AwardsController = {
       let count = await getID(value);
       val.id = count;
       await val.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -72,9 +72,8 @@ const AwardsController = {
       let date = new Date().toDateString();
       aw.date = date;
       await aw.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
-        award: aw,
       });
     } catch (error) {
       return res.status(404).json({

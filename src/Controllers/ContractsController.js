@@ -95,7 +95,7 @@ const ContractsController = {
       let fecha_inicio = new Date(req.body.startDate).getTime();
       if (fecha_inicio > fecha_fin) {
         return res.status(400).json({
-          ok: true,
+          ok: false,
           msg: "Fecha final no debe se menor a la fecha de inicio",
         });
       }
@@ -109,7 +109,7 @@ const ContractsController = {
       Period.id = count;
       await Period.save();
 
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -126,7 +126,7 @@ const ContractsController = {
       val.id = count;
       await val.save();
 
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -145,7 +145,7 @@ const ContractsController = {
       console.log(contract.id);
 
       await contract.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -212,7 +212,7 @@ const ContractsController = {
       val.transactions.id = count;
       await val.save();
 
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -226,7 +226,7 @@ const ContractsController = {
     try {
       const contract = new contractIm(req.body);
       await contract.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -269,7 +269,7 @@ const ContractsController = {
     try {
       const contract = new contractEn(req.body);
       await contract.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {

@@ -13,7 +13,7 @@ const ItemsController = {
       let count = await getID(items);
       item.id = count;
       await item.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -30,7 +30,7 @@ const ItemsController = {
       val.id = count;
       await val.save();
 
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -47,7 +47,7 @@ const ItemsController = {
       val.id = count;
       await val.save();
 
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -64,7 +64,7 @@ const ItemsController = {
       classifications.scheme = "Catálogo de PyS";
       classifications.id = count;
       await classifications.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {
@@ -81,7 +81,7 @@ const ItemsController = {
       val.id = count;
       val.scheme = "Catálogo de PyS";
       await val.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true,
       });
     } catch (error) {

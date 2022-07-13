@@ -6,7 +6,7 @@ const BuyersController = {
     try {
       const buyer = new buyers(req.body);
       await buyer.save();
-      return res.status(400).json({
+      return res.status(200).json({
         ok: true
       });
     } catch (error) {
