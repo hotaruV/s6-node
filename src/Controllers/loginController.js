@@ -92,7 +92,7 @@ const loginController = {
 
       if (passwordUpdate) {
         return res.status(400).json({
-          ok: false,
+          ok: true,
           msg: "Contraseña cambiada Satisfactoriamente",
         });
       }
