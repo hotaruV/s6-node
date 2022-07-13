@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 //archivos de rutas
-app.use("/api/index", require("../routes/index.routes").default);
+app.use("/api/seaslp/index", require("../routes/index.routes").default);
 app.use("/api/seaslp/users", require("../routes/usuarios.routes"));
 app.use("/api/seaslp/login", require("../routes/login.routes"));
 app.use("/api/seaslp/tenders", require("../routes/tenders.routes"));

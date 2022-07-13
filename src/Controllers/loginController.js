@@ -71,18 +71,15 @@ const loginController = {
   ChangePass: async (req, res = response) => {
     try {
       //console.log(req.body);
+      const uid = req.uid;
       let { email, password, newpassword, lastpassword } = req.body;
-      const userData = await Usuario.findOne({ email });
-      if (!userData) {
-        return res.status(400).json({
-          ok: false,
-          msg: "El usuario no existe en la base de datos",
-        });
-      }
+      const userData = await Usuario.findOne({ _id: uid });
+      // console.log(userData);
+      // return 
       if (!bcrypt.compareSync(lastpassword, userData.password)) {
         return res.status(400).json({
           ok: false,
-          msg: "usuario o contraseña invalidos",
+          msg: "usuario invalido",
         });
       }
       const salt = bcrypt.genSaltSync();
