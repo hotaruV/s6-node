@@ -89,11 +89,12 @@ const loginController = {
         { email },
         { $set: { password: newpassword, fist_login: false } }
       );
-      const token = await JWTgenerate(uid);
+      const token = await JWTgenerate(userData.id);
       if (passwordUpdate) {
         return res.status(200).json({
           ok: true,
           msg: "Contraseña cambiada Satisfactoriamente",
+          token
         });
       }
     } catch (error) {
