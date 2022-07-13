@@ -39,10 +39,25 @@ const loginController = {
     try {
       const uid = req.uid;
       const token = await JWTgenerate(uid);
+      const usuario = await Usuario.findById({_id :uid});
       res.status(200).json({
         ok: true,
         uid,
         token,
+        user : {
+          id: usuario.uid,
+          nombres: usuario.nombres,
+          primer_apellido: usuario.primer_apellido,
+          segundo_apellido: usuario.segundo_apellido,
+          email: usuario.email,
+          id_ente_publico: usuario.id_ente_publico,
+          ente_publico: usuario.ente_publico,
+          fist_login: usuario.fist_login,
+          rol: usuario.role,
+          created_at: usuario.created_at,
+          updated_at: usuario.updated_at,
+        },
+        
       });
     } catch (error) {
       return res.status(404).json({
