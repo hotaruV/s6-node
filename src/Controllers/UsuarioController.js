@@ -11,7 +11,7 @@ const usrController = {
     const [usuarios, total] = await Promise.all([
       Usuario.find(
         {},
-        "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at "
+        "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at fist_login ente_publico "
       )
         .skip(desde)
         .limit(hasta),
