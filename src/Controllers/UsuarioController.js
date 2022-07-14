@@ -24,11 +24,11 @@ const usrController = {
       total,
     });
   },
-  getDataUser: async(req, res)=> {
+  getDataUser: async (req, res) => {
     try {
       const uid = req.uid;
       //console.log(req.uid);
-      const usuarioDB = await Usuario.findOne({"_id" :uid});
+      const usuarioDB = await Usuario.findOne({ _id: uid });
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
@@ -198,38 +198,31 @@ const usrController = {
   },
   resetPasswordUser: async (req, res = response) => {
     try {
-      //console.log(req.body);
       const uid = req.params.id;
-      const usuarioDB = await usuario.findById(uid);
-      //console.log(usuarioDB);
-      try {
-        const rfc = usuarioDB.rfc;
-        const salt = bcrypt.genSaltSync();
-        resetPass = bcrypt.hashSync(rfc, salt);
-
-        //console.log(newpassword);
-
-        const passwordUpdate = await Usuario.updateOne(
-          { _id: uid },
-          { $set: { password: resetPass } }
-        );
-        //console.log(passwordUpdate);
-        if (passwordUpdate) {
-          return res.status(200).json({
-            ok: true,
-            msg: "Contraseña cambiada Satisfactoriamente",
-          });
-        }
-      } catch (error) {}
-    } catch (error) {
-      res.status(400).json({
-        ok: false,
-        msg: "El usuario no existe en la base de datos",
-      });
-    }
+      const usuarioDB = await Usuario.findById({ _id: uid });
+      if (!usuarioDB) {
+        return res.status(400).json({
+          ok: false,
+          msg: "El usuario no existe en la base de datos",
+        });
+      }
+      const rfc = usuarioDB.rfc;
+      const salt = bcrypt.genSaltSync();
+      const resetPass = bcrypt.hashSync(rfc, salt);
+      const passwordUpdate = await Usuario.updateOne(
+        { _id: uid },
+        { $set: { password: resetPass } }
+      );
+      if (passwordUpdate) {
+        return res.status(200).json({
+          ok: true,
+          msg: "Contraseña cambiada Satisfactoriamente",
+        });
+      }
+    } catch (error) {}
 
     //const rfc = us;
-  }
+  },
 };
 
 module.exports = usrController;
