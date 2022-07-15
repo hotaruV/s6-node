@@ -8,6 +8,8 @@ import morgan from 'morgan'
 import morganbody from 'morgan-body'
 import path from 'path';
 import fs from 'fs';
+import moment from 'moment'
+
 const app = express();
 
 
@@ -24,7 +26,7 @@ app.use(_json());
 app.use(cors());
 
 const logs = fs.createWriteStream(
-  path.join(__dirname, "../logs", "apilogs.log")
+  path.join(__dirname, "../logs", `apilogs_${moment().add(1).format('YYYY-MM-DD')}.log`)
 );
 morganbody(app, {
   noColors: true,
