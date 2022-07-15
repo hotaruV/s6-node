@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 const dbConect = async () => {
   try {
-    // await mongoose.connect(`mongodb://${process.env.USERMONGO}:${process.env.PASSWORDMONGO}@${process.env.HOSTMONGO}`, {
-    await mongoose.connect(
+    mongoose.connect(
       `${process.env.MONGOSERV}://${process.env.USERMONGO}:${process.env.PASSWORDMONGO}@${process.env.HOSTMONGO}`,
       {
         dbName: process.env.DATABASE,
@@ -18,4 +17,4 @@ const dbConect = async () => {
   }
 };
 
-module.exports = { dbConect };
+module.exports =  dbConect ;
