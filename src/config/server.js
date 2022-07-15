@@ -1,20 +1,42 @@
 "use strict";
 
 import express, { json } from "express";
-const app = express();
-var path = require("path");
 import cors from "cors";
 import { dbConect } from "../config/database";
 import { json as _json } from "body-parser";
+import morgan from 'morgan'
+import morganbody from 'morgan-body'
+import path from 'path';
+import fs from 'fs';
+const app = express();
+
 
 app.set("port", process.env.PORT || 3000);
+
 app.listen(app.get("port"), () => {
   console.log("Escuchando puerto", app.get("port"));
   dbConect();
 });
+
+
 app.use(json());
 app.use(_json());
 app.use(cors());
+
+const logs = fs.createWriteStream(
+  path.join(__dirname, "../logs", "apilogs.log")
+);
+morganbody(app, {
+  noColors: true,
+  stream: logs
+})
+
+
+app.use(morgan('dev',{
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
+
+
 
 //directorio publico
 app.use(express.static(path.join(__dirname, "public")));
