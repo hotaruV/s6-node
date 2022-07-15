@@ -14,7 +14,8 @@ const usrController = {
         "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at fist_login ente_publico "
       )
         .skip(desde)
-        .limit(hasta),
+        .limit(hasta)
+        .sort(nombres),
       Usuario.countDocuments(),
     ]);
 
