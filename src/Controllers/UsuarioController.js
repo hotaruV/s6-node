@@ -49,6 +49,7 @@ const usrController = {
     }
   },
   createUsers: async (req, res = response) => {
+    //console.log(req.body);
     try {
       //console.log(req.body.rfc);
       const { email, rfc } = req.body;
