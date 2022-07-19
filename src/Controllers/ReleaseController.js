@@ -168,6 +168,27 @@ const ReleaseController = {
       });
     }
   },
+  allContratos: async (req, res = response) => {
+    const desde = Number(req.query.desde) || 0;
+    const hasta = Number(req.query.hasta) || 5;
+    //console.log(desde);
+    const [contratos, total] = await Promise.all([
+      contrato.find(
+        {},
+        "ocid id date language tag initiationType parties buyer awards contracts"
+      )
+        .skip(desde)
+        .limit(hasta),
+        
+        contrato.countDocuments(),
+    ]);
+
+    res.status(200).json({
+      ok: true,
+      contratos,
+      total,
+    });
+  },
 
   implementacionCreate: async (req, res = response) => {
     try {

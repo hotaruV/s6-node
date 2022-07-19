@@ -11,6 +11,7 @@ route.post("/adjudicacion", [validarJWT], ReleaseController.adjudicacionCreate);
 route.get("/adjudicacion/:id",  ReleaseController.adjudicacionShow);
 route.post("/contrato", [validarJWT], ReleaseController.contratoCreate);
 route.get("/contrato/:id",  ReleaseController.contratoShow);
+route.get("/contrato/all",  ReleaseController.allContratos);
 route.post("/implementacion", [validarJWT], ReleaseController.implementacionCreate);
 route.get("/implementacion/:id",  ReleaseController.implementacionShow);
 route.post("/enmienda", [validarJWT], ReleaseController.enmiendaCreate);
