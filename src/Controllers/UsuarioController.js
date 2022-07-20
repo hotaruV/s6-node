@@ -5,25 +5,39 @@ import { JWTgenerate } from "../helpers/jwt";
 
 const usrController = {
   getUser: async (req, res) => {
-    const desde = Number(req.query.desde) || 0;
-    const hasta = Number(req.query.hasta) || 5;
-    //console.log(desde);
-    const [usuarios, total] = await Promise.all([
-      Usuario.find(
-        {},
-        "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at fist_login ente_publico "
-      )
-        .skip(desde)
-        .limit(hasta),
-        
-      Usuario.countDocuments(),
-    ]);
+    // const desde = Number(req.query.desde) || 0;
+    // const hasta = Number(req.query.hasta) || 5;
+    // //console.log(desde);
+    // const [usuarios, total] = await Promise.all([
+    //   Usuario.find(
+    //     {},
+    //     "nombres primer_apellido segundo_apellido curp rfc email role rfc_homoclave email created_at updated_at fist_login ente_publico "
+    //   )
+    //     .skip(desde)
+    //     .limit(hasta),
 
-    res.status(200).json({
-      ok: true,
-      usuarios,
-      total,
-    });
+    //   Usuario.countDocuments(),
+    // ]);
+
+    // res.status(200).json({
+    //   ok: true,
+    //   usuarios,
+    //   total,
+    // });
+    try {
+      const usuarios = await Usuario.find();
+      const total = await Usuario.countDocuments();
+      res.status(200).json({
+        ok: true,
+        usuarios,
+        total,
+      });
+    } catch (error) {
+      res.status(400).json({
+        ok: false,
+        msg: "Error en db consultar servicio técnico",
+      });
+    }
   },
   getDataUser: async (req, res) => {
     try {

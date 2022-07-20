@@ -7,7 +7,8 @@ import { isAdminRole } from "../middlewares/validar-roles";
 
 const route = Router();
 
-route.get("/user_all", validarJWT, usuarioController.getUser);
+route.get("/usr", validarJWT, usuarioController.getUser);
+
 route.post(
   "/register",
   [
