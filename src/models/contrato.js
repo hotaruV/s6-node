@@ -20,12 +20,12 @@ const ContractSchema = new Schema({
         }
     ],
     initiationType: { type: String, require },
-    parties: [{ type: Schema.Types.ObjectId, require, ref: 'partie' }],
-    buyer: { type: Schema.Types.ObjectId, require, ref: 'buyer' },
-    awards: { type: Schema.Types.ObjectId, require, ref: 'awards' },
-    contracts: { type: Schema.Types.ObjectId, require, ref: 'contract' },
+    parties: [{ type: Schema.Types.ObjectId, require, ref: 'partie' ,autopopulate: true}],
+    buyer: { type: Schema.Types.ObjectId, require, ref: 'buyer' ,autopopulate: true},
+    awards: { type: Schema.Types.ObjectId, require, ref: 'awards' ,autopopulate: true},
+    contracts: { type: Schema.Types.ObjectId, require, ref: 'contract' ,autopopulate: true},
 });
-
+ContractSchema.plugin(require('mongoose-autopopulate'));
 ContractSchema.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   return object;
