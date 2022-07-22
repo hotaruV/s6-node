@@ -227,7 +227,8 @@ const usrController = {
       const resetPass = bcrypt.hashSync(rfc, salt);
       const passwordUpdate = await Usuario.updateOne(
         { _id: uid },
-        { $set: { password: resetPass } }
+        { $set: { password: resetPass, fist_login: true }},
+        
       );
       if (passwordUpdate) {
         return res.status(200).json({
