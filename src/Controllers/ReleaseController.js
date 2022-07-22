@@ -120,9 +120,12 @@ const ReleaseController = {
   contratoCreate: async (req, res = response) => {
     try {
       const lic = new contrato(req.body);
-      let count = await getID(contrato, true);
+      let count = await getID(contrato);
       lic.id = count;
-      console.log(lic.id);
+      count = await getID(contrato, true);
+      let date = new Date().toDateString();
+      lic.ocid = `${count}- ${date}`;
+      lic.date = date;
       await lic.save();
       return res.status(200).json({
         ok: true,
@@ -169,21 +172,13 @@ const ReleaseController = {
     }
   },
   allContratos: async (req, res) => {
-    console.log("1");
-    const desde = Number(req.query.desde) || 0;
-    const hasta = Number(req.query.hasta) || 10;
     //console.log(desde);
     const [contratos, total] = await Promise.all([
       contrato.find(
         {},
         //"ocid id date language tag initiationType parties buyer awards contracts"
-      )
-        .skip(desde)
-        .limit(hasta),
-        
-        contrato.countDocuments(),
+      ),contrato.countDocuments(),
     ]);
-    console.log("1");
     res.status(200).json({
       ok: true,
       contratos,
