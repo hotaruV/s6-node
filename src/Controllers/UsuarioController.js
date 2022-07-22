@@ -97,7 +97,7 @@ const usrController = {
   getOneUser: async (req, res) => {
     try {
       const uid = req.params.id;
-      const usuarioDB = await usuario.findById(uid);
+      const usuarioDB = await Usuario.findById(uid);
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
@@ -119,7 +119,7 @@ const usrController = {
   updateUser: async (req, res = response) => {
     try {
       const uid = req.params.id;
-      const usuarioDB = await usuario.findById(uid);
+      const usuarioDB = await Usuario.findById(uid);
       if (!usuarioDB) {
         return res.status(404).json({
           ok: false,
