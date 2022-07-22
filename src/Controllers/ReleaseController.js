@@ -173,7 +173,7 @@ const ReleaseController = {
   },
   allContratos: async (req, res) => {
     //console.log(desde);
-    const [contratos, total] = await Promise.all([
+    const [contratos, total, costo] = await Promise.all([
       contrato.find(
         {},
         //"ocid id date language tag initiationType parties buyer awards contracts"
@@ -183,6 +183,7 @@ const ReleaseController = {
       ok: true,
       contratos,
       total,
+      costo,
     });
   },
 
