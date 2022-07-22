@@ -195,6 +195,7 @@ const usrController = {
         "SECRETARIA EJECUTIVA DEL SISTEMA ESTATAL ANTICORRUPCION DE SAN LUIS POTOSI";
       usuario.primer_apellido = "admin";
       usuario.segundo_apellido = "admin";
+      usuario.rfc = password;
       usuario.password = bcrypt.hashSync(password, salt);
       usuario.role = "seseaadmin";
       await usuario.save();
